@@ -5,27 +5,27 @@ from pygame.locals import *
 pygame.init()
 pygame.mixer.init()
 #----------------------------------------------------
-playSurface = pygame.display.set_mode((800,800))
+playSurface = pygame.display.set_mode((1280, 720))
 pygame.display.set_caption("貪吃蛇")
 #--------------------------------------------
-pygame.mixer.music.load("snake/snakeoff.mp3")
+pygame.mixer.music.load("snakeoff.mp3")
 pygame.mixer.music.play(-1)
 #--------------------------------------------
 def gameover():
     pygame.quit()
     sys.exit()
 #------------------------------------------
-snakeBody_color = pygame.Color(0,255,0) 
-food_color = pygame.Color(255,0,0) 
+snakeBody_color = pygame.Color(0, 255, 0) 
+food_color = pygame.Color(255, 0, 0) 
 #----------------------------------------
 def main():
 
     time_clock = pygame.time.Clock() 
     
     
-    snakePosition = [200,200]                       
-    snakeBodys = [[200,200],[180,200],[160,200]] 
-    foodPosition = [500,500]        
+    snakePosition = [200, 200]                       
+    snakeBodys = [[200, 200], [180, 200], [160, 200]] 
+    foodPosition = [500, 500]        
     foodTotal = 1                   
     foodNumber = 1                  
     direction = 'right'             
@@ -94,9 +94,9 @@ def main():
 
         
         if foodTotal == 0:
-            x = random.randrange(1,40)
-            y = random.randrange(1,40)
-            foodPosition = [int(x*20), int(y*20)]
+            x = random.randrange(1, 40)
+            y = random.randrange(1, 40)
+            foodPosition = [int(x * 20), int(y * 20)]
             foodTotal = 1
             foodNumber += 1    
             
@@ -112,13 +112,13 @@ def main():
             foodNumber = 1
             
         
-        background = pygame.image.load("snake/pngtree-green-simple-grass-background-image_537864.jpg")
+        background = pygame.image.load("background.jpg")
         playSurface.blit(background,(0,0))
         pygame.display.update()
 
         
         for position in snakeBodys:
-            pygame.draw.rect(playSurface,snakeBody_color, Rect(position[0], position[1], 20, 20))
+            pygame.draw.rect(playSurface, snakeBody_color, Rect(position[0], position[1], 20, 20))
             pygame.draw.rect(playSurface, food_color, Rect(foodPosition[0], foodPosition[1], 20, 20))
 
         pygame.display.flip() 
