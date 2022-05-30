@@ -249,8 +249,8 @@ def start():
 
         
         if foodTotal == 0:
-            x = random.randrange(1, 40)
-            y = random.randrange(1, 40)
+            x = random.randrange(1, 64)
+            y = random.randrange(1, 36)
             foodPosition = [int(x * 20), int(y * 20)]
             foodTotal = 1
             foodNumber += 1    
@@ -278,7 +278,7 @@ def start():
             pygame.quit()
             sys.exit()
             
-        elif snakePosition[1] > 1280 or snakePosition[1] < 0:
+        elif snakePosition[1] > 720 or snakePosition[1] < 0:
             animating = False
             pygame.quit()
             sys.exit()
