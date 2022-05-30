@@ -273,12 +273,12 @@ def start():
         pygame.display.flip() 
 
         
-        if snakePosition[0] > 1280 or snakePosition[0] < 0:
+        if snakePosition[0] > 1279 or snakePosition[0] < 0:
             animating = False
             pygame.quit()
             sys.exit()
             
-        elif snakePosition[1] > 720 or snakePosition[1] < 0:
+        elif snakePosition[1] > 719 or snakePosition[1] < 0:
             animating = False
             pygame.quit()
             sys.exit()
