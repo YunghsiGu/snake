@@ -95,6 +95,7 @@ def background_display():
     # Rotated version of the image and the shifted rect.
     rotated_image, rect = rotate(arc2, arc2_angle, pivot, offset)
     screen.blit(rotated_image, rect)  # Blit the rotated image.
+    clock.tick(75)
 
 def tutorial():
     tutorial_animating = True
@@ -290,7 +291,7 @@ def start():
                 sys.exit()
 
         pygame.display.flip()
-        clock.tick(30)
+        clock.tick(35)
 
 # 定義options清單的函式
 def options():
