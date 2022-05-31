@@ -291,7 +291,7 @@ def start():
                 sys.exit()
 
         pygame.display.flip()
-        clock.tick(35)
+        clock.tick(30)
 
 # 定義options清單的函式
 def options():
