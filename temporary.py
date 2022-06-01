@@ -8,24 +8,24 @@ from button import Button
 pygame.init()
 pygame.mixer.init()
 
-button_sfx = pygame.mixer.Sound("SAOmenubutton.wav")
+button_sfx = pygame.mixer.Sound("press.wav")
 quit_sfx = pygame.mixer.Sound("SAOalert.wav")
-# 載入名為Last Day On Earth OST - Global Map Theme的mp3檔，並儲存於soundwav2裡
-background_music = pygame.mixer.Sound("Last Day On Earth OST - Global Map Theme.mp3")
+# 載入 BGM.mp3，並儲存於 background_music 裡
+background_music = pygame.mixer.Sound("BGM.mp3")
 # 無限循環撥放background_music(註：只撥放一次為()；無限循環撥放則為(-1))
 background_music.play(-1)
 
 # 初始化設定值
 name = ""
 selection_image = 2
-point_on = pygame.image.load("assets/Change Rect Hover.png")
-point_start = pygame.image.load("assets/Start Rect Hover.png")
-point_option = pygame.image.load("assets/Option Rect Hover.png")
-point_quit = pygame.image.load("assets/Quit Rect Hover.png")
-point_ok = pygame.image.load("assets/Ok Hover.png")
-point_cancel = pygame.image.load("assets/Cancel Hover.png")
-point_paste = pygame.image.load("assets/Paste Hover.png")
-point_remove = pygame.image.load("assets/Remove Hover.png")
+point_on = pygame.image.load("assets/ChangeRectHover.png")
+point_start = pygame.image.load("assets/StartRectHover.png")
+point_option = pygame.image.load("assets/OptionRectHover.png")
+point_quit = pygame.image.load("assets/QuitRectHover.png")
+point_ok = pygame.image.load("assets/OkHover.png")
+point_cancel = pygame.image.load("assets/CancelHover.png")
+point_paste = pygame.image.load("assets/PasteHover.png")
+point_remove = pygame.image.load("assets/RemoveHover.png")
 animating = True
 # 設定視窗與邊界大小(原版為width = 600, height = 700)，依照長度=width，寬度(高度)=height來創建畫面
 screen = pygame.display.set_mode((1280, 720))
@@ -127,10 +127,10 @@ def tutorial():
         TUTORIAL6_RECT = TUTORIAL6_TEXT.get_rect(center=(640, 405))
         screen.blit(TUTORIAL6_TEXT, TUTORIAL6_RECT)
         
-        OK_BUTTON = Button(image=pygame.image.load("assets/Ok Normal.png"), pos=(440, 520),
+        OK_BUTTON = Button(image=pygame.image.load("assets/OkNormal.png"), pos=(440, 520),
                                 text_input=None, font=get_font(55), base_color="Black", hovering_color="Green")
         OK_BUTTON.update(MENU_MOUSE_POS, point_ok, screen)
-        CANCEL_BUTTON = Button(image=pygame.image.load("assets/Cancel Normal.png"), pos=(840, 520),
+        CANCEL_BUTTON = Button(image=pygame.image.load("assets/CancelNormal.png"), pos=(840, 520),
                                text_input=None, font=get_font(55), base_color="Black", hovering_color="Green")
         CANCEL_BUTTON.update(MENU_MOUSE_POS, point_cancel, screen)
         for event in pygame.event.get():
@@ -182,7 +182,7 @@ def start():
         PLAY_RECT = PLAY_TEXT.get_rect(center=(640, 100))
         screen.blit(PLAY_TEXT, PLAY_RECT)'''
 
-        PLAY_BACK = Button(image=pygame.image.load("assets/Quit Rect.png"), pos=(1100, 630),
+        PLAY_BACK = Button(image=pygame.image.load("assets/QuitRect.png"), pos=(1100, 630),
                            text_input="BACK", font=get_font(55), base_color="Black", hovering_color="Green")
         PLAY_BACK.update(PLAY_MOUSE_POS, point_quit, screen)
 
@@ -323,10 +323,10 @@ def options():
         
         # 設定PLAY按鈕
         MENU_MOUSE_POS = pygame.mouse.get_pos()
-        PLAY_BUTTON = Button(image=pygame.image.load("assets/Option Rect.png"), pos=(610, 330),
+        PLAY_BUTTON = Button(image=pygame.image.load("assets/OptionRect.png"), pos=(610, 330),
                              text_input="change", font=get_font(55), base_color="Black", hovering_color="Green")
         PLAY_BUTTON.update(MENU_MOUSE_POS, point_option, screen)
-        PLAY_BUTTON2 = Button(image=pygame.image.load("assets/Option Rect.png"), pos=(960, 330),
+        PLAY_BUTTON2 = Button(image=pygame.image.load("assets/OptionRect.png"), pos=(960, 330),
                               text_input="change", font=get_font(55), base_color="Black", hovering_color="Green")
         PLAY_BUTTON2.update(MENU_MOUSE_POS, point_option, screen)
         
@@ -339,10 +339,10 @@ def options():
         OPTIONS2_RECT = OPTIONS2_TEXT.get_rect(center=(217, 450))
         screen.blit(OPTIONS2_TEXT, OPTIONS2_RECT)
         
-        options_watch_tutorial = Button(image=pygame.image.load("assets/Start Rect.png"), pos=(610, 450),
+        options_watch_tutorial = Button(image=pygame.image.load("assets/StartRect.png"), pos=(610, 450),
                              text_input="Watch", font=get_font(50), base_color="Black", hovering_color="Green")
         # 將Options視窗的按鈕上文字訂為"BACK"並將文字顏色設定為白色，文字中心座標位於(1100, 630)，字體大小為75，游標指向它時文字顏色會變成綠色
-        OPTIONS_BACK = Button(image=pygame.image.load("assets/Quit Rect.png"), pos=(1100, 630),
+        OPTIONS_BACK = Button(image=pygame.image.load("assets/QuitRect.png"), pos=(1100, 630),
                               text_input="BACK", font=get_font(55), base_color="Black", hovering_color="Green")
         
         options_watch_tutorial.update(MENU_MOUSE_POS, point_start, screen)
@@ -387,10 +387,10 @@ def quit():
         QUIT2_TEXT = get_font(50).render("Do you really want to quit?", True, "Black")
         QUIT2_RECT = QUIT2_TEXT.get_rect(center=(640, 330))
         screen.blit(QUIT2_TEXT, QUIT2_RECT)
-        OK_BUTTON = Button(image=pygame.image.load("assets/Ok Normal.png"), pos=(440, 520),
+        OK_BUTTON = Button(image=pygame.image.load("assets/OkNormal.png"), pos=(440, 520),
                                 text_input=None, font=get_font(55), base_color="Black", hovering_color="Green")
         OK_BUTTON.update(MENU_MOUSE_POS, point_ok, screen)
-        CANCEL_BUTTON = Button(image=pygame.image.load("assets/Cancel Normal.png"), pos=(840, 520),
+        CANCEL_BUTTON = Button(image=pygame.image.load("assets/CancelNormal.png"), pos=(840, 520),
                                text_input=None, font=get_font(55), base_color="Black", hovering_color="Green")
         CANCEL_BUTTON.update(MENU_MOUSE_POS, point_cancel, screen)
         for event in pygame.event.get():
@@ -419,11 +419,11 @@ while True:
     menu_rect = menu_text.get_rect(center=(640, 100))
     screen.blit(menu_text, menu_rect)
     
-    start_button = Button(image=pygame.image.load("assets/Start Rect.png"), pos=(640, 250),
+    start_button = Button(image=pygame.image.load("assets/StartRect.png"), pos=(640, 250),
                          text_input="START", font=get_font(55), base_color="Black", hovering_color="Green")
-    options_button = Button(image=pygame.image.load("assets/Option Rect.png"), pos=(640, 400),
+    options_button = Button(image=pygame.image.load("assets/OptionRect.png"), pos=(640, 400),
                             text_input="OPTIONS", font=get_font(55), base_color="Black", hovering_color="Green")
-    quit_button = Button(image=pygame.image.load("assets/Quit Rect.png"), pos=(640, 550),
+    quit_button = Button(image=pygame.image.load("assets/QuitRect.png"), pos=(640, 550),
                          text_input="QUIT", font=get_font(55), base_color="Black", hovering_color="Green")
     
     start_button.update(menu_mouse_pos, point_start, screen)
