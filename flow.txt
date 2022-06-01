@@ -5,3 +5,7 @@ reward
 play(action) -> direction
 game_iteration
 is_collision (碰撞)
+too large iteration
+state[danger straight, left, right,
+    direction up, down, left, right
+    food up, down, left, riht]
