@@ -12,7 +12,7 @@ button_sfx = pygame.mixer.Sound("SAOmenubutton.wav")
 quit_sfx = pygame.mixer.Sound("SAOalert.wav")
 # 載入名為Last Day On Earth OST - Global Map Theme的mp3檔，並儲存於soundwav2裡
 background_music = pygame.mixer.Sound("Last Day On Earth OST - Global Map Theme.mp3")
-#無限循環撥放background_music(註：只撥放一次為()；無限循環撥放則為(-1))
+# 無限循環撥放background_music(註：只撥放一次為()；無限循環撥放則為(-1))
 background_music.play(-1)
 
 # 初始化設定值

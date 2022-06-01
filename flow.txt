@@ -1,0 +1,7 @@
+Source: https://www.youtube.com/watch?v=L8ypSXwyBds&ab_channel=freeCodeCamp.org
+
+reset
+reward
+play(action) -> direction
+game_iteration
+is_collision (碰撞)
