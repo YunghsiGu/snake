@@ -53,8 +53,8 @@ class Snake:
         self.arc1_angle = 0
         self.arc2_angle = 0
 
-        self.paste_flag = 0
-        self.remove_flag = 0
+        # self.paste_flag = 0
+        # self.remove_flag = 0
 
     # 設定主畫面字型
     def get_font(self, size):  # Returns Press-Start-2P in the desired size
