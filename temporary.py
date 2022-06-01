@@ -60,7 +60,7 @@ class Snake:
     def get_font(self, size):  # Returns Press-Start-2P in the desired size
         return pygame.font.Font("assets/font.ttf", size)
 
-    def rotate(self, surface, angle, pivot):
+    def rotate(self, surface, angle):
         """
         Rotate the surface around the pivot point.
 
@@ -71,7 +71,7 @@ class Snake:
             offset (pygame.math.Vector2): This vector is added to the pivot.
         """
         rotated_image = pygame.transform.rotozoom(surface, -angle, 1)  # Rotate the image.
-        rect = rotated_image.get_rect(center=pivot)
+        rect = rotated_image.get_rect(center=self.pivot)
         return rotated_image, rect  # Return the rotated image and shifted rect.
 
     def background_display(self):
@@ -88,15 +88,15 @@ class Snake:
         self.screen.blit(BG, (0, 0))
         
         # Rotated version of the image and the shifted rect.
-        rotated_image, rect = self.rotate(self.ring, self.ring_angle, self.pivot)
+        rotated_image, rect = self.rotate(self.ring, self.ring_angle)
         self.screen.blit(rotated_image, rect)  # Blit the rotated image.
         
         # Rotated version of the image and the shifted rect.
-        rotated_image, rect = self.rotate(self.arc1, self.arc1_angle, self.pivot)
+        rotated_image, rect = self.rotate(self.arc1, self.arc1_angle)
         self.screen.blit(rotated_image, rect)  # Blit the rotated image.
         
         # Rotated version of the image and the shifted rect.
-        rotated_image, rect = self.rotate(self.arc2, self.arc2_angle, self.pivot)
+        rotated_image, rect = self.rotate(self.arc2, self.arc2_angle)
         self.screen.blit(rotated_image, rect)  # Blit the rotated image.
         self.clock.tick(75)
 
@@ -131,10 +131,10 @@ class Snake:
             self.screen.blit(TUTORIAL6_TEXT, TUTORIAL6_RECT)
             
             OK_BUTTON = Button(image=pygame.image.load("assets/OkNormal.png"), pos=(440, 520),
-                                    text_input=None, font=self.get_font(55), base_color="Black", hovering_color="Green")
+                text_input=None, font=self.get_font(55), base_color="Black", hovering_color="Green")
             OK_BUTTON.update(MENU_MOUSE_POS, point_ok, self.screen)
             CANCEL_BUTTON = Button(image=pygame.image.load("assets/CancelNormal.png"), pos=(840, 520),
-                                text_input=None, font=self.get_font(55), base_color="Black", hovering_color="Green")
+                text_input=None, font=self.get_font(55), base_color="Black", hovering_color="Green")
             CANCEL_BUTTON.update(MENU_MOUSE_POS, point_cancel, self.screen)
             for event in pygame.event.get():
                 if event.type == pygame.MOUSEBUTTONDOWN:
@@ -186,7 +186,7 @@ class Snake:
             screen.blit(PLAY_TEXT, PLAY_RECT)'''
 
             PLAY_BACK = Button(image=pygame.image.load("assets/QuitRect.png"), pos=(1100, 630),
-                            text_input="BACK", font=self.get_font(55), base_color="Black", hovering_color="Green")
+                text_input="BACK", font=self.get_font(55), base_color="Black", hovering_color="Green")
             PLAY_BACK.update(PLAY_MOUSE_POS, point_quit, self.screen)
 
             
@@ -329,10 +329,10 @@ class Snake:
             # 設定PLAY按鈕
             MENU_MOUSE_POS = pygame.mouse.get_pos()
             PLAY_BUTTON = Button(image=pygame.image.load("assets/OptionRect.png"), pos=(610, 330),
-                                text_input="change", font=self.get_font(55), base_color="Black", hovering_color="Green")
+                text_input="change", font=self.get_font(55), base_color="Black", hovering_color="Green")
             PLAY_BUTTON.update(MENU_MOUSE_POS, point_option, self.screen)
             PLAY_BUTTON2 = Button(image=pygame.image.load("assets/OptionRect.png"), pos=(960, 330),
-                                text_input="change", font=self.get_font(55), base_color="Black", hovering_color="Green")
+                text_input="change", font=self.get_font(55), base_color="Black", hovering_color="Green")
             PLAY_BUTTON2.update(MENU_MOUSE_POS, point_option, self.screen)
             
             # 將Options視窗的內容標題訂為"Background Image"並將文字顏色設定為#00E3E3，文字中心座標位於(240, 90)，字體大小為50
@@ -411,8 +411,10 @@ class Snake:
             pygame.display.flip()
             self.clock.tick(30)
 
-'''input_box1 = InputBox(80, 200, 960, 96) #160 200 960 96
-input_boxes = [input_box1]'''
+'''
+input_box1 = InputBox(80, 200, 960, 96) #160 200 960 96
+input_boxes = [input_box1]
+'''
 
 if __name__ == '__main__':
     game = Snake()
@@ -428,11 +430,11 @@ if __name__ == '__main__':
         game.screen.blit(menu_text, menu_rect)
         
         start_button = Button(image=pygame.image.load("assets/StartRect.png"), pos=(640, 250),
-                            text_input="START", font=game.get_font(55), base_color="Black", hovering_color="Green")
+            text_input="START", font=game.get_font(55), base_color="Black", hovering_color="Green")
         options_button = Button(image=pygame.image.load("assets/OptionRect.png"), pos=(640, 400),
-                                text_input="OPTIONS", font=game.get_font(55), base_color="Black", hovering_color="Green")
+            text_input="OPTIONS", font=game.get_font(55), base_color="Black", hovering_color="Green")
         quit_button = Button(image=pygame.image.load("assets/QuitRect.png"), pos=(640, 550),
-                            text_input="QUIT", font=game.get_font(55), base_color="Black", hovering_color="Green")
+            text_input="QUIT", font=game.get_font(55), base_color="Black", hovering_color="Green")
         
         start_button.update(menu_mouse_pos, point_start, game.screen)
         options_button.update(menu_mouse_pos, point_option, game.screen)
