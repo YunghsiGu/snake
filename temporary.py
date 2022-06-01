@@ -53,8 +53,8 @@ class Snake:
         self.arc1_angle = 0
         self.arc2_angle = 0
 
-        self.paste_flag = 0
-        self.remove_flag = 0
+        # self.paste_flag = 0
+        # self.remove_flag = 0
 
     # 設定主畫面字型
     def get_font(self, size):  # Returns Press-Start-2P in the desired size
@@ -438,9 +438,7 @@ if __name__ == '__main__':
         
         start_button.update(menu_mouse_pos, point_start, game.screen)
         options_button.update(menu_mouse_pos, point_option, game.screen)
-        quit_button.update(menu_mouse_pos, point_quit, game.screen)
-        
-        
+        quit_button.update(menu_mouse_pos, point_quit, game.screen)        
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
