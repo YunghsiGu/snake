@@ -8,6 +8,11 @@ from button import Button
 pygame.init()
 pygame.mixer.init()
 
+# 字體
+def get_font(size):  # Returns Press-Start-2P in the desired size
+    return pygame.font.Font("assets/font.ttf", size)
+
+
 """
 所有不須重設的值
 """
@@ -61,8 +66,8 @@ class Snake:
 
 
     # 設定主畫面字型
-    def get_font(self, size):  # Returns Press-Start-2P in the desired size
-        return pygame.font.Font("assets/font.ttf", size)
+    # def get_font(self, size):  # Returns Press-Start-2P in the desired size
+    #     return pygame.font.Font("assets/font.ttf", size)
 
     def rotate(self, surface, angle):
         """
@@ -112,33 +117,33 @@ class Snake:
             T0 = pygame.image.load("assets/Alert.png")
             T0 = pygame.transform.scale(T0, (800, 535))
             self.screen.blit(T0, (240, 80))
-            TUTORIAL0_TEXT = self.get_font(50).render("Tutorial", True, "Black")
+            TUTORIAL0_TEXT = get_font(50).render("Tutorial", True, "Black")
             TUTORIAL0_RECT = TUTORIAL0_TEXT.get_rect(center=(640, 155))
             self.screen.blit(TUTORIAL0_TEXT, TUTORIAL0_RECT)
-            TUTORIAL1_TEXT = self.get_font(25).render("1. Click the white box and wait until it becomes green, then insert the URL and press enter.", True, "Black")
+            TUTORIAL1_TEXT = get_font(25).render("1. Click the white box and wait until it becomes green, then insert the URL and press enter.", True, "Black")
             TUTORIAL1_RECT = TUTORIAL1_TEXT.get_rect(center=(640, 250))
             self.screen.blit(TUTORIAL1_TEXT, TUTORIAL1_RECT)
-            TUTORIAL2_TEXT = self.get_font(25).render("2. After inserting the URL, choose one of the functions below to execute.", True, "Black")
+            TUTORIAL2_TEXT = get_font(25).render("2. After inserting the URL, choose one of the functions below to execute.", True, "Black")
             TUTORIAL2_RECT = TUTORIAL2_TEXT.get_rect(center=(640, 285))
             self.screen.blit(TUTORIAL2_TEXT, TUTORIAL2_RECT)
-            TUTORIAL3_TEXT = self.get_font(25).render('''3. You can also use the "paste" and "delete" buttons to make the process easier;''', True, "Black")
+            TUTORIAL3_TEXT = get_font(25).render('''3. You can also use the "paste" and "delete" buttons to make the process easier;''', True, "Black")
             TUTORIAL3_RECT = TUTORIAL3_TEXT.get_rect(center=(640, 320))
             self.screen.blit(TUTORIAL3_TEXT, TUTORIAL3_RECT)
-            TUTORIAL4_TEXT = self.get_font(25).render('''once you clicked those buttons, the text is ready to be pasted or removed.''', True, "Black")
+            TUTORIAL4_TEXT = get_font(25).render('''once you clicked those buttons, the text is ready to be pasted or removed.''', True, "Black")
             TUTORIAL4_RECT = TUTORIAL4_TEXT.get_rect(center=(640, 345))
             self.screen.blit(TUTORIAL4_TEXT, TUTORIAL4_RECT)
-            TUTORIAL5_TEXT = self.get_font(25).render('''Press the space bar to confirm the action.''', True, "Black")
+            TUTORIAL5_TEXT = get_font(25).render('''Press the space bar to confirm the action.''', True, "Black")
             TUTORIAL5_RECT = TUTORIAL5_TEXT.get_rect(center=(640, 370))
             self.screen.blit(TUTORIAL5_TEXT, TUTORIAL5_RECT)
-            TUTORIAL6_TEXT = self.get_font(25).render("4. To watch this tutorial again, please go to the settings.", True, "Black")
+            TUTORIAL6_TEXT = get_font(25).render("4. To watch this tutorial again, please go to the settings.", True, "Black")
             TUTORIAL6_RECT = TUTORIAL6_TEXT.get_rect(center=(640, 405))
             self.screen.blit(TUTORIAL6_TEXT, TUTORIAL6_RECT)
             
             OK_BUTTON = Button(image=pygame.image.load("assets/OkNormal.png"), pos=(440, 520),
-                text_input=None, font=self.get_font(55), base_color="Black", hovering_color="Green")
+                text_input=None, font=get_font(55), base_color="Black", hovering_color="Green")
             OK_BUTTON.update(MENU_MOUSE_POS, point_ok, self.screen)
             CANCEL_BUTTON = Button(image=pygame.image.load("assets/CancelNormal.png"), pos=(840, 520),
-                text_input=None, font=self.get_font(55), base_color="Black", hovering_color="Green")
+                text_input=None, font=get_font(55), base_color="Black", hovering_color="Green")
             CANCEL_BUTTON.update(MENU_MOUSE_POS, point_cancel, self.screen)
             for event in pygame.event.get():
                 if event.type == pygame.MOUSEBUTTONDOWN:
@@ -190,7 +195,7 @@ class Snake:
             screen.blit(PLAY_TEXT, PLAY_RECT)'''
 
             PLAY_BACK = Button(image=pygame.image.load("assets/QuitRect.png"), pos=(1100, 630),
-                text_input="BACK", font=self.get_font(55), base_color="Black", hovering_color="Green")
+                text_input="BACK", font=get_font(55), base_color="Black", hovering_color="Green")
             PLAY_BACK.update(PLAY_MOUSE_POS, point_quit, self.screen)
 
             
@@ -333,26 +338,26 @@ class Snake:
             # 設定PLAY按鈕
             MENU_MOUSE_POS = pygame.mouse.get_pos()
             PLAY_BUTTON = Button(image=pygame.image.load("assets/OptionRect.png"), pos=(610, 330),
-                text_input="change", font=self.get_font(55), base_color="Black", hovering_color="Green")
+                text_input="change", font=get_font(55), base_color="Black", hovering_color="Green")
             PLAY_BUTTON.update(MENU_MOUSE_POS, point_option, self.screen)
             PLAY_BUTTON2 = Button(image=pygame.image.load("assets/OptionRect.png"), pos=(960, 330),
-                text_input="change", font=self.get_font(55), base_color="Black", hovering_color="Green")
+                text_input="change", font=get_font(55), base_color="Black", hovering_color="Green")
             PLAY_BUTTON2.update(MENU_MOUSE_POS, point_option, self.screen)
             
             # 將Options視窗的內容標題訂為"Background Image"並將文字顏色設定為#00E3E3，文字中心座標位於(240, 90)，字體大小為50
-            OPTIONS1_TEXT = self.get_font(50).render("Background Image", True, "#00E3E3")
+            OPTIONS1_TEXT = get_font(50).render("Background Image", True, "#00E3E3")
             OPTIONS1_RECT = OPTIONS1_TEXT.get_rect(center=(240, 90))
             self.screen.blit(OPTIONS1_TEXT, OPTIONS1_RECT)
             
-            OPTIONS2_TEXT = self.get_font(50).render("Watch tutorial", True, "#00E3E3")
+            OPTIONS2_TEXT = get_font(50).render("Watch tutorial", True, "#00E3E3")
             OPTIONS2_RECT = OPTIONS2_TEXT.get_rect(center=(217, 450))
             self.screen.blit(OPTIONS2_TEXT, OPTIONS2_RECT)
             
             options_watch_tutorial = Button(image=pygame.image.load("assets/StartRect.png"), pos=(610, 450),
-                                text_input="Watch", font=self.get_font(50), base_color="Black", hovering_color="Green")
+                text_input="Watch", font=get_font(50), base_color="Black", hovering_color="Green")
             # 將Options視窗的按鈕上文字訂為"BACK"並將文字顏色設定為白色，文字中心座標位於(1100, 630)，字體大小為75，游標指向它時文字顏色會變成綠色
             OPTIONS_BACK = Button(image=pygame.image.load("assets/QuitRect.png"), pos=(1100, 630),
-                                text_input="BACK", font=self.get_font(55), base_color="Black", hovering_color="Green")
+                text_input="BACK", font=get_font(55), base_color="Black", hovering_color="Green")
             
             options_watch_tutorial.update(MENU_MOUSE_POS, point_start, self.screen)
             OPTIONS_BACK.update(MENU_MOUSE_POS, point_quit, self.screen)
@@ -390,17 +395,17 @@ class Snake:
             A0 = pygame.image.load("assets/Alert.png")
             A0 = pygame.transform.scale(A0, (800, 535))
             self.screen.blit(A0, (240, 80))
-            QUIT1_TEXT = self.get_font(50).render("Alert", True, "Black")
+            QUIT1_TEXT = get_font(50).render("Alert", True, "Black")
             QUIT1_RECT = QUIT1_TEXT.get_rect(center=(640, 155))
             self.screen.blit(QUIT1_TEXT, QUIT1_RECT)
-            QUIT2_TEXT = self.get_font(50).render("Do you really want to quit?", True, "Black")
+            QUIT2_TEXT = get_font(50).render("Do you really want to quit?", True, "Black")
             QUIT2_RECT = QUIT2_TEXT.get_rect(center=(640, 330))
             self.screen.blit(QUIT2_TEXT, QUIT2_RECT)
             OK_BUTTON = Button(image=pygame.image.load("assets/OkNormal.png"), pos=(440, 520),
-                text_input=None, font=self.get_font(55), base_color="Black", hovering_color="Green")
+                text_input=None, font=get_font(55), base_color="Black", hovering_color="Green")
             OK_BUTTON.update(MENU_MOUSE_POS, point_ok, self.screen)
             CANCEL_BUTTON = Button(image=pygame.image.load("assets/CancelNormal.png"), pos=(840, 520),
-                text_input=None, font=self.get_font(55), base_color="Black", hovering_color="Green")
+                text_input=None, font=get_font(55), base_color="Black", hovering_color="Green")
             CANCEL_BUTTON.update(MENU_MOUSE_POS, point_cancel, self.screen)
             for event in pygame.event.get():
                 if event.type == pygame.MOUSEBUTTONDOWN:
@@ -429,16 +434,16 @@ if __name__ == '__main__':
         
         menu_mouse_pos = pygame.mouse.get_pos()
         
-        menu_text = game.get_font(100).render("Snake", True, "#921AFF")
+        menu_text = get_font(100).render("Snake", True, "#921AFF")
         menu_rect = menu_text.get_rect(center=(640, 100))
         game.screen.blit(menu_text, menu_rect)
         
         start_button = Button(image=pygame.image.load("assets/StartRect.png"), pos=(640, 250),
-            text_input="START", font=game.get_font(55), base_color="Black", hovering_color="Green")
+            text_input="START", font=get_font(55), base_color="Black", hovering_color="Green")
         options_button = Button(image=pygame.image.load("assets/OptionRect.png"), pos=(640, 400),
-            text_input="OPTIONS", font=game.get_font(55), base_color="Black", hovering_color="Green")
+            text_input="OPTIONS", font=get_font(55), base_color="Black", hovering_color="Green")
         quit_button = Button(image=pygame.image.load("assets/QuitRect.png"), pos=(640, 550),
-            text_input="QUIT", font=game.get_font(55), base_color="Black", hovering_color="Green")
+            text_input="QUIT", font=get_font(55), base_color="Black", hovering_color="Green")
         
         start_button.update(menu_mouse_pos, point_start, game.screen)
         options_button.update(menu_mouse_pos, point_option, game.screen)
