@@ -28,7 +28,7 @@ SNAKE_BODY_COLOR = pygame.Color(0, 255, 0)
 FOOD_COLOR = pygame.Color(255, 0, 0)
 
 '''
-檔案載入
+檔案載入, 除非我有寫錯不然可以不要看它
 '''
 # music
 button_sfx = pygame.mixer.Sound("press.wav")
@@ -310,6 +310,7 @@ class Snake:    # 對應到 SnakeGame
             to easily draw images to the screen (“blit” them).
             '''
             
+            # 一堆按鍵, 基本上可以不要看它
             # 圖片顯示與縮放
             global P1, P2
             P1 = pygame.transform.scale(P1, (160 * 2, 90 * 2)) # 128 * 3, 72 * 3 --> 160 * 2, 90 * 2
@@ -336,9 +337,10 @@ class Snake:    # 對應到 SnakeGame
             
             self.options_watch_tutorial.update(MENU_MOUSE_POS, point_start, self.screen)
             self.OPTIONS_BACK.update(MENU_MOUSE_POS, point_quit, self.screen)
-
+            
+            # 使用者輸入
             for event in pygame.event.get():
-                """ 
+                """ 我找不到視窗的叉叉
                 if event.type == pygame.QUIT:
                     pygame.quit()
                 """
@@ -368,6 +370,7 @@ class Snake:    # 對應到 SnakeGame
         while is_quit_animating:
             MENU_MOUSE_POS = pygame.mouse.get_pos()
             
+            # 一堆互動, 應該可以不要看它
             global A0
             A0 = pygame.transform.scale(A0, (800, 535))
             self.screen.blit(A0, (240, 80))
@@ -382,7 +385,8 @@ class Snake:    # 對應到 SnakeGame
             
             self.OK_BUTTON.update(MENU_MOUSE_POS, point_ok, self.screen)
             self.CANCEL_BUTTON.update(MENU_MOUSE_POS, point_cancel, self.screen)
-
+            
+            # 使用者輸入
             for event in pygame.event.get():
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if self.OK_BUTTON.checkForInput(MENU_MOUSE_POS):
@@ -408,7 +412,8 @@ class Snake:    # 對應到 SnakeGame
         rotated_image = pygame.transform.rotozoom(surface, -angle, 1)  # Rotate the image.
         rect = rotated_image.get_rect(center=self.pivot)
         return rotated_image, rect  # Return the rotated image and shifted rect.
-
+    
+    # 播背景的, 應該不用理它
     def background_display(self):
         self.ring_angle += 1
         self.arc1_angle += 1.5
@@ -433,7 +438,8 @@ class Snake:    # 對應到 SnakeGame
 
         self._update_ui()
         self.clock.tick(75)
-
+    
+    # 一長串的教學內容
     def tutorial(self):
         is_tutorial_animating = True
 
