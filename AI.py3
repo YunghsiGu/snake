@@ -1,6 +1,5 @@
 # 引入模組, 並利用 button 模組引入 button.py 檔案(class Button())
 import random, pygame, time
-import msvcrt
 from pygame.locals import *
 from button import Button
 from enum import Enum
