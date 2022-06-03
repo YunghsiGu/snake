@@ -398,7 +398,8 @@ class Snake:    # 對應到 SnakeGame
                         is_quit_animating = False
             self._update_ui()
             self.clock.tick(30)
-
+    
+    # 負責轉圈圈的那個吧, 應該不用理它
     def rotate(self, surface, angle):
         """
         Rotate the surface around the pivot point.
