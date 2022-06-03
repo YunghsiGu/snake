@@ -68,7 +68,7 @@ OkNormal = pygame.image.load("assets/OkNormal.png")
 menu_text = font(100).render("Snake", True, "#921AFF")
 menu_rect = menu_text.get_rect(center=(640, 100))
 
-class Snake:
+class Snake:    # 對應到 SnakeGame
     # 初始化設定值
     def __init__(self, w=1280, h=720): 
         # 遊戲畫面大小
@@ -78,6 +78,7 @@ class Snake:
         # init display
         self.screen = pygame.display.set_mode((self.w, self.h))   # 設定視窗與邊界大小
         pygame.display.set_caption("Snake") # 視窗標題
+        # 應該是在轉的那些圖片
         ring.convert_alpha()
         self.arc1 = pygame.transform.scale(arc1.convert_alpha(), (RW * 1.5, RH * 1.5))
         self.arc2 = pygame.transform.scale(arc2.convert_alpha(), (RW * 2, RH * 2))
@@ -120,7 +121,7 @@ class Snake:
         self.selection_image = 2 # Background image
 
         
-    # 重設 button 們使用的圖片
+    # 重設 button 們使用的圖片, 除非我有寫錯不然可以不要看它
     def reset_button(self):
         ''' button:
         按鈕圖像; 文字中心座標; 按鈕上文字; 字體大小; 文字顏色; 游標指向它時的文字顏色       
@@ -154,7 +155,8 @@ class Snake:
         if self.foodPosition in self.snakeBodys:
             self._place_food() 
     
-    def start(self):
+    # 蛇蛇遊戲本身
+    def start(self):    # 對應到 play_step
         # 設定主畫面背景調整為視窗大小
         if self.selection_image == 1:
             BG = background1
@@ -545,4 +547,4 @@ if __name__ == '__main__':
                     button_sfx.play()
                     game.quit()
 
-        game._update_ui
+        game._update_ui()
