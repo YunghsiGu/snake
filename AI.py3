@@ -278,6 +278,9 @@ class Snake:    # 對應到 SnakeGame
             return True
         elif self.snakePosition.y > 719 or self.snakePosition.y < 0:
             return True
+        # hits itself
+        elif self.snakePosition in self.snakeBodys[1:]:
+            return True
         else:
             return False
 
