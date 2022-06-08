@@ -167,7 +167,7 @@ class Snake:    # 對應到 SnakeGame
             DIED1_RECT = DIED1_TEXT.get_rect(center=(640, 155))
             self.screen.blit(DIED1_TEXT, DIED1_RECT)
 
-            DIED2_TEXT = font(60).render("Score: ", True, "White")
+            DIED2_TEXT = font(60).render("Score: " + str(self.score), True, "White")
             DIED2_RECT = DIED2_TEXT.get_rect(center=(640, 350))
             self.screen.blit(DIED2_TEXT, DIED2_RECT)
             
