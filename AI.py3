@@ -191,11 +191,9 @@ class Snake:    # 對應到 SnakeGame
 
         # 1. collect user input
         for event in pygame.event.get():
-            '''
             if event.type == pygame.QUIT:
                 self.is_animating = False
                 pygame.quit()
-            '''
             # user input
             if event.type == pygame.KEYDOWN:                
                 ''' 不是這樣寫的
@@ -337,10 +335,10 @@ class Snake:    # 對應到 SnakeGame
             
             # 使用者輸入
             for event in pygame.event.get():
-                """ 我找不到視窗的叉叉
+                # 我找不到視窗的叉叉
                 if event.type == pygame.QUIT:
                     pygame.quit()
-                """
+               
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if self.OPTIONS_BACK.checkForInput(OPTIONS_MOUSE_POS):
                         button_sfx.play()   # 播放音效
@@ -355,6 +353,7 @@ class Snake:    # 對應到 SnakeGame
                         button_sfx.play()
                         self.tutorial()
 
+            self.reset_button()
             self._update_ui()
             if not flag:
                 break
@@ -393,6 +392,7 @@ class Snake:    # 對應到 SnakeGame
                     if self.CANCEL_BUTTON.checkForInput(MENU_MOUSE_POS):
                         button_sfx.play()
                         is_quit_animating = False
+            self.reset_button()
             self._update_ui()
             self.clock.tick(30)
     
@@ -498,6 +498,7 @@ class Snake:    # 對應到 SnakeGame
                     if self.CANCEL_BUTTON.checkForInput(MENU_MOUSE_POS):
                         button_sfx.play()
                         is_tutorial_animating = False
+            self.reset_button()
             self._update_ui()
             self.clock.tick(30)
 
