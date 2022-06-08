@@ -450,35 +450,18 @@ class Snake:    # 對應到 SnakeGame
             TUTORIAL0_TEXT = font(50).render("Tutorial", True, "Black")
             TUTORIAL0_RECT = TUTORIAL0_TEXT.get_rect(center=(640, 155))
             self.screen.blit(TUTORIAL0_TEXT, TUTORIAL0_RECT)
-
-            TUTORIAL1_TEXT = font(25).render("1. Click the white box and wait until it becomes green, " +
-                "then insert the URL and press enter.", True, "Black")
-            TUTORIAL1_RECT = TUTORIAL1_TEXT.get_rect(center=(640, 250))
+            TUTORIAL1_TEXT = font(25).render("1. Use WASD or arrow keys to move.", True, "Black")
+            TUTORIAL1_RECT = TUTORIAL1_TEXT.get_rect(center=(640, 260))
             self.screen.blit(TUTORIAL1_TEXT, TUTORIAL1_RECT)
-
-            TUTORIAL2_TEXT = font(25).render("2. After inserting the URL, " + 
-                "choose one of the functions below to execute.", True, "Black")
-            TUTORIAL2_RECT = TUTORIAL2_TEXT.get_rect(center=(640, 285))
+            TUTORIAL2_TEXT = font(25).render("2. Once the snake eats the food, it will become longer.", True, "Black")
+            TUTORIAL2_RECT = TUTORIAL2_TEXT.get_rect(center=(640, 295))
             self.screen.blit(TUTORIAL2_TEXT, TUTORIAL2_RECT)
-
-            TUTORIAL3_TEXT = font(25).render("3. You can also use the \"paste\" and \"delete\" buttons " +
-                "to make the process easier;", True, "Black")
-            TUTORIAL3_RECT = TUTORIAL3_TEXT.get_rect(center=(640, 320))
+            TUTORIAL3_TEXT = font(25).render('''3. If the snake hits the wall or bites itself, then game over.''', True, "Black")
+            TUTORIAL3_RECT = TUTORIAL3_TEXT.get_rect(center=(640, 330))
             self.screen.blit(TUTORIAL3_TEXT, TUTORIAL3_RECT)
-
-            TUTORIAL4_TEXT = font(25).render("once you clicked those buttons, " +
-                "the text is ready to be pasted or removed.", True, "Black")
-            TUTORIAL4_RECT = TUTORIAL4_TEXT.get_rect(center=(640, 345))
+            TUTORIAL4_TEXT = font(25).render('''4. Collect as much food as you can.''', True, "Black")
+            TUTORIAL4_RECT = TUTORIAL4_TEXT.get_rect(center=(640, 365))
             self.screen.blit(TUTORIAL4_TEXT, TUTORIAL4_RECT)
-
-            TUTORIAL5_TEXT = font(25).render("Press the space bar to confirm the action.", True, "Black")
-            TUTORIAL5_RECT = TUTORIAL5_TEXT.get_rect(center=(640, 370))
-            self.screen.blit(TUTORIAL5_TEXT, TUTORIAL5_RECT)
-
-            TUTORIAL6_TEXT = font(25).render("4. To watch this tutorial again, " +
-                "please go to the settings.", True, "Black")
-            TUTORIAL6_RECT = TUTORIAL6_TEXT.get_rect(center=(640, 405))
-            self.screen.blit(TUTORIAL6_TEXT, TUTORIAL6_RECT)
                       
             # 使用者點選
             self.OK_BUTTON.update(MENU_MOUSE_POS, point_ok, self.screen)
