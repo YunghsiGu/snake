@@ -178,7 +178,6 @@ class Snake:    # 對應到 SnakeGame
         '''
 
         self.PLAY_BACK.update(PLAY_MOUSE_POS, point_quit, self.screen)
-        self._update_ui
         
         # speed up
         if self.foodNumber % 5 == 0:
@@ -188,7 +187,6 @@ class Snake:    # 對應到 SnakeGame
         for position in self.snakeBodys:
             pygame.draw.rect(self.screen, SNAKE_BODY_COLOR, Rect(position.x, position.y, 20, 20))
             pygame.draw.rect(self.screen, FOOD_COLOR, Rect(self.foodPosition.x, self.foodPosition.y, 20, 20))
-        self._update_ui()
         self.clock.tick(75)
 
         # 1. collect user input
@@ -257,7 +255,6 @@ class Snake:    # 對應到 SnakeGame
     # 更新畫面
     def _update_ui(self):
         pygame.display.flip()
-        self.reset_button()
 
     # 移動
     def _move(self, nextDirection):
@@ -436,9 +433,6 @@ class Snake:    # 對應到 SnakeGame
         # Rotated version of the image and the shifted rect.
         rotated_image, rect = self.rotate(self.arc2, self.arc2_angle)
         self.screen.blit(rotated_image, rect)  # Blit the rotated image.
-
-        self._update_ui()
-        self.clock.tick(75)
     
     # 一長串的教學內容
     def tutorial(self):
@@ -519,14 +513,13 @@ if __name__ == '__main__':
     while True:
         game.background_display()   
         menu_mouse_pos = pygame.mouse.get_pos()
-
+        
         game.reset_button()
         game.screen.blit(menu_text, menu_rect)
                
         game.start_button.update(menu_mouse_pos, point_start, game.screen)
         game.options_button.update(menu_mouse_pos, point_option, game.screen)
         game.quit_button.update(menu_mouse_pos, point_quit, game.screen)
-        game._update_ui()
         
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -553,5 +546,4 @@ if __name__ == '__main__':
                 elif game.quit_button.checkForInput(menu_mouse_pos):
                     button_sfx.play()
                     game.quit()
-
         game._update_ui()
