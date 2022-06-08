@@ -438,7 +438,7 @@ class Snake:    # 對應到 SnakeGame
         self.screen.blit(rotated_image, rect)  # Blit the rotated image.
 
         self._update_ui()
-        self.clock.tick(75)
+        self.clock.tick(200)
     
     # 一長串的教學內容
     def tutorial(self):
