@@ -395,7 +395,7 @@ class Snake:    # 對應到 SnakeGame
                         is_quit_animating = False
             self.reset_button()
             self._update_ui()
-            self.clock.tick(30)
+            self.clock.tick(40)
     
     # 負責轉圈圈的那個吧, 應該不用理它
     def rotate(self, surface, angle):
