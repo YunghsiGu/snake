@@ -116,7 +116,7 @@ class Snake:    # 對應到 SnakeGame
 
         self.score = 0
         self.foodNumber = 1     # 隨著遊戲進展加速用       
-        self.speed = 20         # 我很爛所以調很慢, 你們可以改
+        self.speed = 50         # 我很爛所以調很慢, 你們可以改
 
         self.selection_image = 2 # Background image
 
@@ -145,7 +145,9 @@ class Snake:    # 對應到 SnakeGame
         self.options_button = Button(image=OptionRect, pos=(640, 400),
             text_input="OPTIONS", font=font(55), base_color="Black", hovering_color="Green")
         self.quit_button = Button(image=QuitRect, pos=(640, 550),
-            text_input="QUIT", font=font(55), base_color="Black", hovering_color="Green")       
+            text_input="QUIT", font=font(55), base_color="Black", hovering_color="Green") 
+        self.respawn_button = Button(image=StartRect, pos=(640, 550), text_input="Respawn", font=font(55), 
+            base_color="Black", hovering_color="Green")
 
     def _place_food(self):
         # 食物長在邊界有點過分所以調了一下 XDD
@@ -153,7 +155,34 @@ class Snake:    # 對應到 SnakeGame
         y = random.randrange(2, 35)
         self.foodPosition = Point(x * 20, y * 20)       
         if self.foodPosition in self.snakeBodys:
-            self._place_food() 
+            self._place_food()
+
+    def you_died_display(self):
+        you_died_animating = True
+
+        while you_died_animating:
+            MENU_MOUSE_POS = pygame.mouse.get_pos()
+
+            DIED1_TEXT = font(100).render("YOU DIED!", True, "Red")
+            DIED1_RECT = DIED1_TEXT.get_rect(center=(640, 155))
+            self.screen.blit(DIED1_TEXT, DIED1_RECT)
+
+            DIED2_TEXT = font(60).render("Score: ", True, "White")
+            DIED2_RECT = DIED2_TEXT.get_rect(center=(640, 350))
+            self.screen.blit(DIED2_TEXT, DIED2_RECT)
+            
+            self.respawn_button.update(MENU_MOUSE_POS, point_start, self.screen)
+            
+            # 使用者輸入
+            for event in pygame.event.get():
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if self.respawn_button.checkForInput(MENU_MOUSE_POS):
+                        button_sfx.play()
+                        you_died_animating = False
+
+            self.reset_button()
+            self._update_ui()
+            self.clock.tick(40)
     
     # 蛇蛇遊戲本身
     def start(self):    # 對應到 play_step
@@ -224,6 +253,7 @@ class Snake:    # 對應到 SnakeGame
         self.is_animating = True
         if self._is_collision():
             self.is_animating = False
+            game.you_died_display()
             return self.is_animating, self.score
 
         # 4. place new food or just move
@@ -285,6 +315,8 @@ class Snake:    # 對應到 SnakeGame
             y += 20
 
         self.snakePosition = Point(x, y)
+    
+
         
     # 定義 options 清單的函式
     def options(self):
