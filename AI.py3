@@ -530,14 +530,7 @@ if __name__ == '__main__':
                 # 判斷是否按下 PLAY 按鈕
                 if game.start_button.checkForInput(menu_mouse_pos):
                     button_sfx.play()
-
-                    while game.is_animating:
-                        game.is_animating, game.score = game.start()
-
-                        if game.is_animating == False:
-                            game.reset()
-                            print('score:', game.score)
-                            break
+                    game.tutorial()
 
                 # 判斷是否按下 OPTIONS 按鈕
                 elif game.options_button.checkForInput(menu_mouse_pos):
