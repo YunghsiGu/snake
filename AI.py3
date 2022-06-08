@@ -169,7 +169,7 @@ class Snake:    # 對應到 SnakeGame
         
         PLAY_MOUSE_POS = pygame.mouse.get_pos() # 獲得滑鼠的位置
 
-        '''
+        '''[DELETE THIS]
         將Start視窗的內容標題訂為 "Insert the URL at here" 並將文字顏色設定為 #AE8F00,
         文字中心座標位於 (640, 100), 字體大小為 75
         PLAY_TEXT = font(75).render("Insert the URL at here", True, "#AE8F00")
@@ -187,8 +187,9 @@ class Snake:    # 對應到 SnakeGame
         for position in self.snakeBodys:
             pygame.draw.rect(self.screen, SNAKE_BODY_COLOR, Rect(position.x, position.y, 20, 20))
             pygame.draw.rect(self.screen, FOOD_COLOR, Rect(self.foodPosition.x, self.foodPosition.y, 20, 20))
+        self._update_ui()
         self.clock.tick(75)
-
+        
         # 1. collect user input
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -196,7 +197,7 @@ class Snake:    # 對應到 SnakeGame
                 pygame.quit()
             # user input
             if event.type == pygame.KEYDOWN:                
-                ''' 不是這樣寫的
+                ''' [DELETE THIS]不是這樣寫的
                 if event.key == pygame.K_ESCAPE:    # escape 鍵以退出動畫  
                     self.is_animating = False
                 '''
