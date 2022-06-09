@@ -96,9 +96,9 @@ class Agent:
         return final_move
 
 def train():
-    plot_scores = []
-    plot_mean_scores = []
-    total_score = 0
+    plot_scores = []   #記錄每次分數(繪圖用)
+    plot_mean_scores = []   #記錄平均分數
+    total_score = 0 
     record = 0
     agent = Agent()
     game = Snake()
@@ -124,8 +124,8 @@ def train():
             agent.num_games += 1
             agent.train_long_memory()
 
-            if score > record:
-                record = score
+            if score > record:  #更新紀錄
+                record = score 
                 # agent.model.save()
 
             print('Game', agent.num_games, 'Score', score, 'Record', record)
