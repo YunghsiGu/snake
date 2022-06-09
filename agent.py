@@ -26,10 +26,10 @@ class Agent:
         point_u = Point(head.x, head.y - 20)    # 上
         point_d = Point(head.x, head.y + 20)    # 下
         
-        dir_l = game.nextDirection == Direction.LEFT    # 方向左
-        dir_r = game.nextDirection == Direction.RIGHT   # 右
-        dir_u = game.nextDirection == Direction.UP      # 上
-        dir_d = game.nextDirection == Direction.DOWN    # 下
+        dir_l = game.direction == Direction.LEFT    # 方向左
+        dir_r = game.direction == Direction.RIGHT   # 右
+        dir_u = game.direction == Direction.UP      # 上
+        dir_d = game.direction == Direction.DOWN    # 下
 
         # 紀錄當前遊戲狀態，包括往哪走會掛掉、目前移動方向、食物在哪，以 boolean 表示
         state = [
