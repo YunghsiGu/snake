@@ -61,7 +61,7 @@ class Agent:
         return np.array(state, dtype=int)#把state變成numpy array且以1或0表示
 
     def remember(self, state, action, reward, next_state, done):
-        self.memory.append((state, action, reward, next_state, done)) # pop left if MAX_MEMORY is reached
+        self.memory.append((state, action, reward, next_state, done)) #poplest if MAX_MEMORY is reached 
 
     def train_long_memory(self):
         if len(self.memory) > BATCH_SIZE:
@@ -71,7 +71,7 @@ class Agent:
         
         states, actions, rewards, next_states, dones = zip(*mini_sample)
         self.trainer.train_step(states, actions, rewards, next_states, dones)
-        """ equils to this
+        """ equals to this
         for state, action, reward, next_state, done in mini_sample:
             self.trainer.train_step(state, action, reward, next_state, done) 
         """
