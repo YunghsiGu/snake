@@ -19,46 +19,46 @@ class Agent:
 
     def get_state(self, Snake):
         head = Snake.snakeBodys[0]
-        point_l = Point(head.x - 20, head.y)    # left
-        point_r = Point(head.x + 20, head.y)    # right
-        point_u = Point(head.x, head.y - 20)    # up
-        point_d = Point(head.x, head.y + 20)    # down
+        point_l = Point(head.x - 20, head.y)    # 蛇頭往左一格的點
+        point_r = Point(head.x + 20, head.y)    # 右
+        point_u = Point(head.x, head.y - 20)    # 上
+        point_d = Point(head.x, head.y + 20)    # 下
 
-        dir_l = Snake.nextDirection == Direction.LEFT
-        dir_r = Snake.nextDirection == Direction.RIGHT
-        dir_u = Snake.nextDirection == Direction.UP
-        dir_d = Snake.nextDirection == Direction.DOWN
+        dir_l = Snake.nextDirection == Direction.LEFT#方向左
+        dir_r = Snake.nextDirection == Direction.RIGHT#右
+        dir_u = Snake.nextDirection == Direction.UP#上
+        dir_d = Snake.nextDirection == Direction.DOWN#下
 
-        state = [
-            # danger straight
+        state = [     #紀錄當前遊戲狀態，包括往哪走會掛掉、目前移動方向、食物在哪，以boolean表示
+            # danger straight(若繼續直走，遊戲結束)
             (dir_r and Snake.is_collision(point_r)) or
             (dir_l and Snake.is_collision(point_l)) or
             (dir_u and Snake.is_collision(point_u)) or
             (dir_d and Snake.is_collision(point_d)),
 
-            # danger right
+            # danger right(若往當前方向順時針移轉一次的方向走，遊戲結束)
             (dir_u and Snake.is_collision(point_r)) or
             (dir_d and Snake.is_collision(point_l)) or
             (dir_l and Snake.is_collision(point_u)) or
             (dir_r and Snake.is_collision(point_d)),
 
-            # danger left
+            # danger left(若往當前方向逆時針移轉一次的方向走，遊戲結束)
             (dir_d and Snake.is_collision(point_r)) or
             (dir_u and Snake.is_collision(point_l)) or
             (dir_r and Snake.is_collision(point_u)) or
             (dir_l and Snake.is_collision(point_d)),
 
-            # move direction
+            # move direction(當前移動方向)
             dir_l, dir_r, dir_u, dir_d,
 
-            # food location
+            # food location(食物之於蛇頭的方位)
             Snake.foodPosition.x < Snake.snakePosition.x,   # food left
             Snake.foodPosition.x > Snake.snakePosition.x,   # food right
             Snake.foodPosition.y < Snake.snakePosition.y,   # food up
             Snake.foodPosition.y > Snake.snakePosition.y,   # food down
         ]
 
-        return np.array(state, dtype=int)
+        return np.array(state, dtype=int)#把state變成numpy array且以1或0表示
 
     def remember(self, state, action, reward, next_state, done):
         self.memory.append((state, action, reward, next_state, done)) # pop left if MAX_MEMORY is reached
