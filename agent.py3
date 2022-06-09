@@ -1,4 +1,3 @@
-from matplotlib.pyplot import cla
 import torch
 import random
 import numpy as np
