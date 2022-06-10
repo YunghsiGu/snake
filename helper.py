@@ -1,13 +1,13 @@
 import matplotlib.pyplot as plt
 from IPython import display
 
-plt.ion()
+plt.ion()   # 二維陣列圖
 
 def plot(scores, mean_scores):
-    display.clear_output(wait=True)
-    display.display(plt.gcf())
-    plt.clf()
-    plt.title('Training...')
+    display.clear_output(wait=True) # cls
+    display.display(plt.gcf())      # print / get current figure
+    plt.clf()                       # clear current figure
+    plt.title('Training')
     plt.xlabel('Number of Games')
     plt.ylabel('Score')
     plt.plot(scores)
