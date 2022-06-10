@@ -163,6 +163,3 @@ class Snake:    # 對應到 SnakeGame
             y += 20
 
         self.snakePosition = Point(x, y)
-
-        
-    
