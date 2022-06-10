@@ -61,13 +61,13 @@ class Snake:    # 對應到 SnakeGame
 
         self.score = 0
         self.foodNumber = 1     # 隨著遊戲進展加速用       
-        self.speed = 20         # 我很爛所以調很慢, 你們可以改
+        self.speed = 40         # 我很爛所以調很慢, 你們可以改
         self.frame_iteration = 0
         
     def _place_food(self):
         # 食物長在邊界有點過分所以調了一下 XDD
-        x = random.randrange(2, 63)
-        y = random.randrange(2, 35)
+        x = random.randint(0, (self.w-20 )//20 )
+        y = random.randint(0, (self.h-20 )//20 )
         self.foodPosition = Point(x * 20, y * 20)       
         if self.foodPosition in self.snakeBodys:
             self._place_food() 
@@ -96,7 +96,7 @@ class Snake:    # 對應到 SnakeGame
         if self.is_collision() or self.frame_iteration > 100 * len(self.snakeBodys):
             self.is_animating = False
             reward = -10
-            return reward, self.is_animating, self.score
+            return reward, not self.is_animating, self.score
 
         # 4. place new food or just move
         if self.snakePosition == self.foodPosition:
@@ -112,17 +112,19 @@ class Snake:    # 對應到 SnakeGame
         self.clock.tick(self.speed)
 
         # 6. return is_animating and score
-        return reward, self.is_animating, self.score
+        return reward, not self.is_animating, self.score
     
     # 有沒有撞到
     def is_collision(self, pt=None):
-        if pt == None:
+        if pt is None:
             pt = self.snakePosition
-
         # hits boundary
-        if pt.x > 1279 or pt.x < 0:
+        if pt.x > self.w - 20 or pt.x < 0:
             return True
-        elif pt.y > 719 or pt.y < 0:
+        elif pt.y > self.h - 20 or pt.y < 0:
+            return True
+        # hits itself
+        elif pt in self.snakePosition[1:]:
             return True
         else:
             return False
