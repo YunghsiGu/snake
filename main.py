@@ -1,5 +1,4 @@
 # 做 AI 用的簡化版遊戲
-# 引入模組, 並利用 button 模組引入 button.py 檔案(class Button())
 import random, pygame
 from pygame.locals import *
 from enum import Enum
@@ -26,11 +25,11 @@ Point = namedtuple('Point', 'x, y')
 # color
 SNAKE_BODY_COLOR = pygame.Color(0, 255, 0) 
 FOOD_COLOR = pygame.Color(255, 0, 0)
-BLACK = (0,0,0)
+BLACK = (0, 0, 0)
 
 class Snake:    # 對應到 SnakeGame
     # 初始化設定值
-    def __init__(self, w=1280, h=660):  # 因為螢幕大小的關係，我有調過
+    def __init__(self, w=1280, h=720):
         # 遊戲畫面大小
         self.w = w
         self.h = h
@@ -40,6 +39,7 @@ class Snake:    # 對應到 SnakeGame
         pygame.display.set_caption("Snake") # 視窗標題
 
         self.clock = pygame.time.Clock()
+        self.speed = 60
 
         # init game state
         self.reset()
@@ -59,15 +59,13 @@ class Snake:    # 對應到 SnakeGame
         self._place_food()
         self.is_animating = True    # 是否繼續執行 start()
 
-        self.score = 0
-        self.foodNumber = 1     # 隨著遊戲進展加速用       
-        self.speed = 40         # 我很爛所以調很慢, 你們可以改
+        self.score = 0     
         self.frame_iteration = 0
         
     def _place_food(self):
         # 食物長在邊界有點過分所以調了一下 XDD
-        x = random.randint(0, (self.w-20 )//20 )
-        y = random.randint(0, (self.h-20 )//20 )
+        x = random.randint(1, (self.w - 20 ) // 20 - 1)
+        y = random.randint(1, (self.h - 20 ) // 20 - 1)
         self.foodPosition = Point(x * 20, y * 20)       
         if self.foodPosition in self.snakeBodys:
             self._place_food() 
@@ -75,11 +73,6 @@ class Snake:    # 對應到 SnakeGame
     # 蛇蛇遊戲本身
     def start(self, action):    # 對應到 play_step
         self.frame_iteration += 1
-
-        # speed up
-        if self.foodNumber % 5 == 0:
-            self.speed += 1
-            self.foodNumber = 1
         
         # 1. collect user input
         for event in pygame.event.get():
@@ -101,7 +94,6 @@ class Snake:    # 對應到 SnakeGame
         # 4. place new food or just move
         if self.snakePosition == self.foodPosition:
             self.score += 1
-            self.foodNumber += 1
             reward = 10
             self._place_food()
         else:
@@ -151,7 +143,7 @@ class Snake:    # 對應到 SnakeGame
         elif np.array_equal(action, [0, 1, 0]): # turn right
             next_idx = (idx + 1) % 4
             new_dir = clock_wise[next_idx]
-        else:   # turn left
+        else:                                   # turn left
             next_idx = (idx - 1) % 4
             new_dir = clock_wise[next_idx]
 
