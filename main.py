@@ -124,7 +124,7 @@ class Snake:    # 對應到 SnakeGame
         elif pt.y > self.h - 20 or pt.y < 0:
             return True
         # hits itself
-        elif pt in self.snakeB[1:]:
+        elif pt in self.snakeBodys[1:]:
             return True
         else:
             return False
