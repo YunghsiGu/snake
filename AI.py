@@ -1,5 +1,5 @@
 # 引入模組, 並利用 button 模組引入 button.py 檔案(class Button())
-import random, pygame, time
+import random, pygame, time, os
 from pygame.locals import *
 from button import Button
 from enum import Enum
@@ -11,7 +11,7 @@ pygame.mixer.init()
 
 # 字體
 def font(size):  # Returns Press-Start-2P in the desired size
-    return pygame.font.Font("assets/font.ttf", size)
+    return pygame.font.Font(os.path.join('assets', 'font.ttf'), size)   # 支援跨平台
 
 # 時間
 time_counter = 0
@@ -24,7 +24,7 @@ class Direction(Enum):
     UP = 3
     DOWN = 4
 
-# 呃應該是一個 tuple, 用 x, y 來表示 index
+# 一個 tuple, 用 x, y 來表示 index
 Point = namedtuple('Point', 'x, y')
 
 # color
@@ -32,48 +32,44 @@ SNAKE_BODY_COLOR = pygame.Color(0, 255, 0)
 FOOD_COLOR = pygame.Color(255, 0, 0)
 
 '''
-檔案載入, 除非我有寫錯不然可以不要看它
+檔案載入
 '''
 # music
-button_sfx = pygame.mixer.Sound("press.wav")
-quit_sfx = pygame.mixer.Sound("quit.wav")
-background_music = pygame.mixer.Sound("BGM.mp3")
+button_sfx = pygame.mixer.Sound(os.path.join('sound', 'press.wav')) # 支援跨平台
+quit_sfx = pygame.mixer.Sound(os.path.join('sound', 'quit.wav'))
+background_music = pygame.mixer.Sound(os.path.join('sound', 'BGM.mp3'))
 # 無限循環撥放 background_music (註：只撥放一次為()；無限循環撥放則為(-1))
 background_music.play(-1)
 # pictures
-point_on = pygame.image.load("assets/ChangeRectHover.png")
-point_start = pygame.image.load("assets/StartRectHover.png")
-point_option = pygame.image.load("assets/OptionRectHover.png")
-point_quit = pygame.image.load("assets/QuitRectHover.png")
-point_ok = pygame.image.load("assets/OkHover.png")
-point_cancel = pygame.image.load("assets/CancelHover.png")
-point_paste = pygame.image.load("assets/PasteHover.png")
-point_remove = pygame.image.load("assets/RemoveHover.png")
-T0 = pygame.image.load("assets/Alert.png")
+point_on = pygame.image.load(os.path.join('assets', 'ChangeRectHover.png'))
+point_start = pygame.image.load(os.path.join('assets', 'StartRectHover.png'))
+point_option = pygame.image.load(os.path.join('assets', 'OptionRectHover.png'))
+point_quit = pygame.image.load(os.path.join('assets', 'QuitRectHover.png'))
+point_ok = pygame.image.load(os.path.join('assets', 'OkHover.png'))
+point_cancel = pygame.image.load(os.path.join('assets', 'CancelHover.png'))
+point_paste = pygame.image.load(os.path.join('assets', 'PasteHover.png'))
+point_remove = pygame.image.load(os.path.join('assets', 'RemoveHover.png'))
+T0 = pygame.image.load(os.path.join('assets', 'Alert.png'))
 T0 = pygame.transform.scale(T0, (800, 535))
-BG_main = pygame.image.load("assets/Optionbackground.jpg")
-BG_main = pygame.transform.scale(BG_main, (1280, 720))
-background1 = pygame.image.load("assets/Background.jpg")
-background2 = pygame.image.load("assets/Background2.jpg")
-ring = pygame.image.load("assets/ring.png")
-RW, RH = ring.get_width(), ring.get_height()
-arc1 = pygame.image.load("assets/arc1.png")
-arc2 = pygame.image.load("assets/arc2.png")
-P1 = pygame.image.load("Background.jpg")
-P2 = pygame.image.load("Background2.jpg")
-A0 = pygame.image.load("assets/Alert.png")
-QuitRect = pygame.image.load("assets/QuitRect.png")
-OptionRect = pygame.image.load("assets/OptionRect.png")
-StartRect = pygame.image.load("assets/StartRect.png")
-CancelNormal = pygame.image.load("assets/CancelNormal.png")
-OkNormal = pygame.image.load("assets/OkNormal.png")
+bg_main = pygame.image.load(os.path.join('assets', 'Optionbackground.jpg'))
+bg_main = pygame.transform.scale(bg_main, (1280, 720))
+background1 = pygame.image.load(os.path.join('assets', 'Background.jpg'))
+background2 = pygame.image.load(os.path.join('assets', 'Background2.jpg'))
+ring = pygame.image.load(os.path.join('assets', 'ring.png'))
+arc1 = pygame.image.load(os.path.join('assets', 'arc1.png'))
+arc2 = pygame.image.load(os.path.join('assets', 'arc2.png'))
+A0 = pygame.image.load(os.path.join('assets', 'Alert.png'))
+QuitRect = pygame.image.load(os.path.join('assets', 'QuitRect.png'))
+OptionRect = pygame.image.load(os.path.join('assets', 'OptionRect.png'))
+StartRect = pygame.image.load(os.path.join('assets', 'StartRect.png'))
+CancelNormal = pygame.image.load(os.path.join('assets', 'CancelNormal.png'))
+OkNormal = pygame.image.load(os.path.join('assets', 'OkNormal.png'))
 
 # 初始畫面的字
 menu_text = font(100).render("Snake", True, "#921AFF")
 menu_rect = menu_text.get_rect(center=(640, 100))
 
-class Snake:    # 對應到 SnakeGame
-    # 初始化設定值
+class Snake:    
     def __init__(self, w=1280, h=720): 
         # 遊戲畫面大小
         self.w = w
@@ -82,10 +78,10 @@ class Snake:    # 對應到 SnakeGame
         # init display
         self.screen = pygame.display.set_mode((self.w, self.h))   # 設定視窗與邊界大小
         pygame.display.set_caption("Snake") # 視窗標題
-        # 應該是在轉的那些圖片
+        # 在轉的那些圖片
         ring.convert_alpha()
-        self.arc1 = pygame.transform.scale(arc1.convert_alpha(), (RW * 1.5, RH * 1.5))
-        self.arc2 = pygame.transform.scale(arc2.convert_alpha(), (RW * 2, RH * 2))
+        self.arc1 = pygame.transform.scale(arc1.convert_alpha(), (ring.get_width() * 1.5, ring.get_height() * 1.5))
+        self.arc2 = pygame.transform.scale(arc2.convert_alpha(), (ring.get_width() * 2, ring.get_height() * 2))
         self.clock = pygame.time.Clock()
 
         # original center position of the surface
@@ -106,8 +102,7 @@ class Snake:    # 對應到 SnakeGame
     def reset(self):
         # init game state
         self.reset_button()
-        self.currentDirection = Direction.RIGHT
-        self.nextDirection = Direction.RIGHT
+        self.direction = Direction.RIGHT
 
         self.snakePosition = Point(200, 200) # head             
         self.snakeBodys = [self.snakePosition, Point(180, 200), Point(160, 200)] 
@@ -122,13 +117,10 @@ class Snake:    # 對應到 SnakeGame
 
         self.score = 0
         self.move_counter = 0
-        self.foodNumber = 1     # 隨著遊戲進展加速用       
-        self.speed = 50         # 我很爛所以調很慢, 你們可以改
-
+        self.foodNumber = 1     # 隨著遊戲進展加速用
+        self.speed = 50    
         
-
-        
-    # 重設 button 們使用的圖片, 除非我有寫錯不然可以不要看它
+    # 重設 button 們使用的圖片
     def reset_button(self):
         ''' button:
         按鈕圖像; 文字中心座標; 按鈕上文字; 字體大小; 文字顏色; 游標指向它時的文字顏色       
@@ -160,8 +152,8 @@ class Snake:    # 對應到 SnakeGame
 
     def _place_food(self):
         # 食物長在邊界有點過分所以調了一下 XDD
-        x = random.randrange(2, 63)
-        y = random.randrange(2, 35)
+        x = random.randrange(1, (self.w - 20) // 20 - 1)
+        y = random.randrange(1, (self.h - 20) // 20 - 1)
         self.foodPosition = Point(x * 20, y * 20)       
         if self.foodPosition in self.snakeBodys:
             self._place_food()
@@ -182,19 +174,19 @@ class Snake:    # 對應到 SnakeGame
             
             self.respawn_button.update(MENU_MOUSE_POS, point_start, self.screen)
             
-            # 使用者輸入
+            # user input
             for event in pygame.event.get():
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if self.respawn_button.checkForInput(MENU_MOUSE_POS):
                         button_sfx.play()
                         you_died_animating = False
-
+           
             self.reset_button()
-            self._update_ui()
+            pygame.display.flip()
             self.clock.tick(40)
     
     # 蛇蛇遊戲本身
-    def start(self):    # 對應到 play_step
+    def start(self):
         start_animating = True
         
         global time_counter
@@ -203,27 +195,17 @@ class Snake:    # 對應到 SnakeGame
     
             # 設定主畫面背景調整為視窗大小
             if self.selection_image == 1:
-                BG = background1
+                bg = background1
                 # 調整為視窗大小
-                BG = pygame.transform.scale(BG, (self.w, self.h))
-                self.screen.blit(BG, (0, 0))        
-                self._update_ui()
+                bg = pygame.transform.scale(bg, (self.w, self.h))
+                self.screen.blit(bg, (0, 0))        
             elif self.selection_image == 2:
-                BG = background2
+                bg = background2
                 # 調整為視窗大小
-                BG = pygame.transform.scale(BG, (self.w, self.h))
-                self.screen.blit(BG, (0, 0))        
-                self._update_ui()
+                bg = pygame.transform.scale(bg, (self.w, self.h))
+                self.screen.blit(bg, (0, 0))        
         
             PLAY_MOUSE_POS = pygame.mouse.get_pos() # 獲得滑鼠的位置
-
-            '''[DELETE THIS]
-            將Start視窗的內容標題訂為 "Insert the URL at here" 並將文字顏色設定為 #AE8F00,
-            文字中心座標位於 (640, 100), 字體大小為 75
-            PLAY_TEXT = font(75).render("Insert the URL at here", True, "#AE8F00")
-            PLAY_RECT = PLAY_TEXT.get_rect(center=(640, 100))
-            screen.blit(PLAY_TEXT, PLAY_RECT)
-            '''
 
             self.PLAY_BACK.update(PLAY_MOUSE_POS, point_quit, self.screen)
         
@@ -244,9 +226,6 @@ class Snake:    # 對應到 SnakeGame
                 self.speed += 1
                 self.foodNumber = 1
 
-            for position in self.snakeBodys:
-                pygame.draw.rect(self.screen, SNAKE_BODY_COLOR, Rect(position.x, position.y, 20, 20))
-                pygame.draw.rect(self.screen, FOOD_COLOR, Rect(self.foodPosition.x, self.foodPosition.y, 20, 20))
             self._update_ui()
             self.clock.tick(75)
             
@@ -259,22 +238,18 @@ class Snake:    # 對應到 SnakeGame
                 if event.type == pygame.USEREVENT: 
                     time_counter += 1
                 # user input
-                if event.type == pygame.KEYDOWN:                
-                    ''' [DELETE THIS]不是這樣寫的
-                    if event.key == pygame.K_ESCAPE:    # escape 鍵以退出動畫  
-                        self.is_animating = False
-                    '''
+                if event.type == pygame.KEYDOWN:         
                     if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
-                        self.nextDirection = Direction.RIGHT
+                        self.direction = Direction.RIGHT
                         self.move_counter += 1
                     if event.key == pygame.K_LEFT or event.key == pygame.K_a:
-                        self.nextDirection = Direction.LEFT
+                        self.direction = Direction.LEFT
                         self.move_counter += 1
                     if event.key == pygame.K_UP or event.key == pygame.K_w:
-                        self.nextDirection = Direction.UP
+                        self.direction = Direction.UP
                         self.move_counter += 1
                     if event.key == pygame.K_DOWN or event.key == pygame.K_s:
-                        self.nextDirection = Direction.DOWN
+                        self.direction = Direction.DOWN
                         self.move_counter += 1
                 # backpage
                 if event.type == pygame.MOUSEBUTTONDOWN:
@@ -284,7 +259,7 @@ class Snake:    # 對應到 SnakeGame
                         return self.is_animating, self.score
     
             # 2. move
-            self._move(self.nextDirection) # update the head
+            self._move(self.direction) # update the head
             self.snakeBodys.insert(0, self.snakePosition)
     
             # 3. check if game over
@@ -304,6 +279,7 @@ class Snake:    # 對應到 SnakeGame
                 self.snakeBodys.pop()
     
             # 5. update ui and clock
+            self.reset_button()
             self._update_ui()
             self.clock.tick(self.speed)
     
@@ -313,9 +289,9 @@ class Snake:    # 對應到 SnakeGame
     # 有沒有撞到
     def _is_collision(self):
         # hits boundary
-        if self.snakePosition.x > 1279 or self.snakePosition.x < 0:
+        if self.snakePosition.x > self.w - 1 or self.snakePosition.x < 0:
             return True
-        elif self.snakePosition.y > 719 or self.snakePosition.y < 0:
+        elif self.snakePosition.y > self.h - 1 or self.snakePosition.y < 0:
             return True
         # hits itself
         elif self.snakePosition in self.snakeBodys[1:]:
@@ -325,40 +301,28 @@ class Snake:    # 對應到 SnakeGame
 
     # 更新畫面
     def _update_ui(self):
+        for position in self.snakeBodys:
+            pygame.draw.rect(self.screen, SNAKE_BODY_COLOR, Rect(position.x, position.y, 20, 20))
+            pygame.draw.rect(self.screen, FOOD_COLOR, Rect(self.foodPosition.x, self.foodPosition.y, 20, 20))
+
         pygame.display.flip()
 
     # 移動
-    def _move(self, nextDirection):
+    def _move(self, direction):
         # Point 裡的值不能做調整, 所以用 x, y 來暫存, 之後修改 snakePosition
         x = self.snakePosition.x
         y = self.snakePosition.y
 
-        if nextDirection == Direction.RIGHT and self.currentDirection != Direction.LEFT:
-            is_change = True
-        elif nextDirection == Direction.LEFT and self.currentDirection != Direction.RIGHT:
-            is_change = True           
-        elif nextDirection == Direction.UP and self.currentDirection != Direction.DOWN:
-            is_change = True
-        elif nextDirection == Direction.DOWN and self.currentDirection != Direction.UP:
-            is_change = True
-        else:
-            is_change = False
-
-        if is_change:
-            self.currentDirection = nextDirection
-
-        if self.currentDirection == Direction.RIGHT:
+        if direction == Direction.RIGHT and self.direction != Direction.LEFT:
             x += 20
-        elif self.currentDirection == Direction.LEFT:
-            x -= 20
-        elif self.currentDirection == Direction.UP:
+        elif direction == Direction.LEFT and self.direction != Direction.RIGHT:
+            x -= 20         
+        elif direction == Direction.UP and self.direction != Direction.DOWN:
             y -= 20
-        elif self.currentDirection == Direction.DOWN:
-            y += 20
+        elif direction == Direction.DOWN and self.direction != Direction.UP:
+            y += 20            
 
         self.snakePosition = Point(x, y)
-    
-
         
     # 定義 options 清單的函式
     def options(self):
@@ -369,24 +333,27 @@ class Snake:    # 對應到 SnakeGame
             # 偵測滑鼠游標位置
             OPTIONS_MOUSE_POS = pygame.mouse.get_pos()
 
-            # 將主畫面背景設為 BG_main, 並調整為視窗大小
-            self.screen.blit(BG_main, (0, 0))
+            # 將主畫面背景設為 bg_main, 並調整為視窗大小
+            self.screen.blit(bg_main, (0, 0))
             
             '''
-            1.設定Options裡能夠更換背景的兩張圖片, 其中背景圖片P1為Background.png, 背景圖片P2為Background2.png
-            2.設定好這些圖片後, 利用pygame.transform.scale將原圖片大小調整成與視窗大小一致
-            3.The screen object represents your game screen.
-            screen.blit()is a thin wrapper around a Pygame surface that allows you 
-            to easily draw images to the screen (“blit” them).
+            1. 設定 Options 裡能夠更換背景的兩張圖片, 其中背景圖片 background1 為 Background.png, 
+            背景圖片 background2 為 Background2.png
+            2. 設定好這些圖片後, 利用 pygame.transform.scale 將原圖片大小調整成與視窗大小一致
+            3. The screen object represents your game screen.
+            screen.blit() is a thin wrapper around a Pygame surface that allows you 
+            to easily draw images to the screen ("blit" them).
             '''
             
-            # 一堆按鍵, 基本上可以不要看它
+            # 一堆按鍵
             # 圖片顯示與縮放
-            global P1, P2
-            P1 = pygame.transform.scale(P1, (160 * 2, 90 * 2)) # 128 * 3, 72 * 3 --> 160 * 2, 90 * 2
-            self.screen.blit(P1, (450, 80))
-            P2 = pygame.transform.scale(P2, (160 * 2, 90 * 2)) # 128 * 3, 72 * 3 --> 160 * 2, 90 * 2
-            self.screen.blit(P2, (800, 80))
+            global background1, background2
+            background1 = pygame.transform.scale(background1, (160 * 2, 90 * 2))
+            # 128 * 3, 72 * 3 --> 160 * 2, 90 * 2
+            self.screen.blit(background1, (450, 80))
+            background2 = pygame.transform.scale(background2, (160 * 2, 90 * 2))
+            # 128 * 3, 72 * 3 --> 160 * 2, 90 * 2
+            self.screen.blit(background2, (800, 80))
             
             MENU_MOUSE_POS = pygame.mouse.get_pos() # 取得游標位置
 
@@ -414,7 +381,6 @@ class Snake:    # 對應到 SnakeGame
             
             # 使用者輸入
             for event in pygame.event.get():
-                # 我找不到視窗的叉叉
                 if event.type == pygame.QUIT:
                     pygame.quit()
                
@@ -435,7 +401,8 @@ class Snake:    # 對應到 SnakeGame
                         button_sfx.play()
 
             self.reset_button()
-            self._update_ui()
+            pygame.display.flip()
+
             if not flag:
                 break
 
@@ -447,7 +414,7 @@ class Snake:    # 對應到 SnakeGame
         while is_quit_animating:
             MENU_MOUSE_POS = pygame.mouse.get_pos()
             
-            # 一堆互動, 應該可以不要看它
+            # 一堆互動
             global A0
             A0 = pygame.transform.scale(A0, (800, 535))
             self.screen.blit(A0, (240, 80))
@@ -474,10 +441,10 @@ class Snake:    # 對應到 SnakeGame
                         button_sfx.play()
                         is_quit_animating = False
             self.reset_button()
-            self._update_ui()
+            pygame.display.flip()
             self.clock.tick(40)
     
-    # 負責轉圈圈的那個吧, 應該不用理它
+    # 負責轉圈圈的那個
     def rotate(self, surface, angle):
         """
         Rotate the surface around the pivot point.
@@ -492,16 +459,16 @@ class Snake:    # 對應到 SnakeGame
         rect = rotated_image.get_rect(center=self.pivot)
         return rotated_image, rect  # Return the rotated image and shifted rect.
     
-    # 播背景的, 應該不用理它
+    # 播背景的
     def background_display(self):
         self.ring_angle += 1
         self.arc1_angle += 1.5
         self.arc2_angle += 1.25
         
         # IMPORTANT! MUST UPDATE THE BACKGROUND BEFORE BLITTING THE PNG IMAGE!
-        BG = background1
-        BG = pygame.transform.scale(BG, (self.w, self.h))
-        self.screen.blit(BG, (0, 0))
+        bg = background1
+        bg = pygame.transform.scale(bg, (self.w, self.h))
+        self.screen.blit(bg, (0, 0))
         
         # Rotated version of the image and the shifted rect.
         rotated_image, rect = self.rotate(ring, self.ring_angle)
@@ -563,7 +530,7 @@ class Snake:    # 對應到 SnakeGame
                         button_sfx.play()
                         is_tutorial_animating = False
             self.reset_button()
-            self._update_ui()
+            pygame.display.flip()
             self.clock.tick(30)
 
 
@@ -604,4 +571,6 @@ if __name__ == '__main__':
                 elif game.quit_button.checkForInput(menu_mouse_pos):
                     button_sfx.play()
                     game.quit()
-        game._update_ui()
+
+        pygame.display.flip()
+

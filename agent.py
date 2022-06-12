@@ -2,7 +2,7 @@ import torch
 import random
 import numpy as np
 from collections import deque   # Doubly Ended Queue 可以從兩端操作的 list
-from snake import Snake_G, Direction, Point
+from snakeAI import Snake_G, Direction, Point
 from model import Linear_QNet, QTrainer
 from helper import plot
 import os
