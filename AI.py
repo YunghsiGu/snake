@@ -13,6 +13,10 @@ pygame.mixer.init()
 def font(size):  # Returns Press-Start-2P in the desired size
     return pygame.font.Font("assets/font.ttf", size)
 
+# 時間
+time_counter = 0
+pygame.time.set_timer(pygame.USEREVENT, 1000)
+
 # 方向
 class Direction(Enum):
     RIGHT = 1
@@ -94,6 +98,8 @@ class Snake:    # 對應到 SnakeGame
         self.arc1_angle = 0
         self.arc2_angle = 0
         
+        self.selection_image = 2 # Background image
+        
         # init game state
         self.reset()
 
@@ -115,10 +121,11 @@ class Snake:    # 對應到 SnakeGame
         self.is_animating = True    # 是否繼續執行 start()
 
         self.score = 0
+        self.move_counter = 0
         self.foodNumber = 1     # 隨著遊戲進展加速用       
         self.speed = 50         # 我很爛所以調很慢, 你們可以改
 
-        self.selection_image = 2 # Background image
+        
 
         
     # 重設 button 們使用的圖片, 除非我有寫錯不然可以不要看它
@@ -133,6 +140,8 @@ class Snake:    # 對應到 SnakeGame
         self.PLAY_BUTTON2 = Button(image=OptionRect, pos=(960, 330), text_input="change", font=font(55), 
             base_color="Black", hovering_color="Green")
         self.options_watch_tutorial = Button(image=StartRect, pos=(610, 450), text_input="Watch", font=font(50), 
+            base_color="Black", hovering_color="Green")
+        self.options_ai_activation = Button(image=StartRect, pos=(610, 570), text_input="Activate", font=font(50), 
             base_color="Black", hovering_color="Green")
         self.OPTIONS_BACK = Button(image=QuitRect, pos=(1100, 630), text_input="BACK", font=font(55), 
             base_color="Black", hovering_color="Green")
@@ -186,90 +195,120 @@ class Snake:    # 對應到 SnakeGame
     
     # 蛇蛇遊戲本身
     def start(self):    # 對應到 play_step
-        # 設定主畫面背景調整為視窗大小
-        if self.selection_image == 1:
-            BG = background1
-        elif self.selection_image == 2:
-            BG = background2
-        # 調整為視窗大小
-        BG = pygame.transform.scale(BG, (self.w, self.h))
-        self.screen.blit(BG, (0, 0))        
-        self._update_ui()
+        start_animating = True
         
-        PLAY_MOUSE_POS = pygame.mouse.get_pos() # 獲得滑鼠的位置
-
-        '''[DELETE THIS]
-        將Start視窗的內容標題訂為 "Insert the URL at here" 並將文字顏色設定為 #AE8F00,
-        文字中心座標位於 (640, 100), 字體大小為 75
-        PLAY_TEXT = font(75).render("Insert the URL at here", True, "#AE8F00")
-        PLAY_RECT = PLAY_TEXT.get_rect(center=(640, 100))
-        screen.blit(PLAY_TEXT, PLAY_RECT)
-        '''
-
-        self.PLAY_BACK.update(PLAY_MOUSE_POS, point_quit, self.screen)
+        global time_counter
         
-        # speed up
-        if self.foodNumber % 5 == 0:
-            self.speed += 1
-            self.foodNumber = 1
-
-        for position in self.snakeBodys:
-            pygame.draw.rect(self.screen, SNAKE_BODY_COLOR, Rect(position.x, position.y, 20, 20))
-            pygame.draw.rect(self.screen, FOOD_COLOR, Rect(self.foodPosition.x, self.foodPosition.y, 20, 20))
-        self._update_ui()
-        self.clock.tick(75)
+        while start_animating:
+    
+            # 設定主畫面背景調整為視窗大小
+            if self.selection_image == 1:
+                BG = background1
+                # 調整為視窗大小
+                BG = pygame.transform.scale(BG, (self.w, self.h))
+                self.screen.blit(BG, (0, 0))        
+                self._update_ui()
+            elif self.selection_image == 2:
+                BG = background2
+                # 調整為視窗大小
+                BG = pygame.transform.scale(BG, (self.w, self.h))
+                self.screen.blit(BG, (0, 0))        
+                self._update_ui()
         
-        # 1. collect user input
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
+            PLAY_MOUSE_POS = pygame.mouse.get_pos() # 獲得滑鼠的位置
+
+            '''[DELETE THIS]
+            將Start視窗的內容標題訂為 "Insert the URL at here" 並將文字顏色設定為 #AE8F00,
+            文字中心座標位於 (640, 100), 字體大小為 75
+            PLAY_TEXT = font(75).render("Insert the URL at here", True, "#AE8F00")
+            PLAY_RECT = PLAY_TEXT.get_rect(center=(640, 100))
+            screen.blit(PLAY_TEXT, PLAY_RECT)
+            '''
+
+            self.PLAY_BACK.update(PLAY_MOUSE_POS, point_quit, self.screen)
+        
+            START1_TEXT = font(60).render("Score: " + str(self.score), True, "White")
+            START1_RECT = START1_TEXT.get_rect(center=(200, 100))
+            self.screen.blit(START1_TEXT, START1_RECT)
+        
+            START2_TEXT = font(60).render("Time: " + str(time_counter), True, "White")
+            START2_RECT = START2_TEXT.get_rect(center=(560, 100))
+            self.screen.blit(START2_TEXT, START2_RECT)
+        
+            START3_TEXT = font(60).render("Moves: " + str(self.move_counter), True, "White")
+            START3_RECT = START3_TEXT.get_rect(center=(920, 100))
+            self.screen.blit(START3_TEXT, START3_RECT)
+        
+            # speed up
+            if self.foodNumber % 5 == 0:
+                self.speed += 1
+                self.foodNumber = 1
+
+            for position in self.snakeBodys:
+                pygame.draw.rect(self.screen, SNAKE_BODY_COLOR, Rect(position.x, position.y, 20, 20))
+                pygame.draw.rect(self.screen, FOOD_COLOR, Rect(self.foodPosition.x, self.foodPosition.y, 20, 20))
+            self._update_ui()
+            self.clock.tick(75)
+            
+            # 1. collect user input
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    self.is_animating = False
+                    pygame.quit()
+                # counting time
+                if event.type == pygame.USEREVENT: 
+                    time_counter += 1
+                # user input
+                if event.type == pygame.KEYDOWN:                
+                    ''' [DELETE THIS]不是這樣寫的
+                    if event.key == pygame.K_ESCAPE:    # escape 鍵以退出動畫  
+                        self.is_animating = False
+                    '''
+                    if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
+                        self.nextDirection = Direction.RIGHT
+                        self.move_counter += 1
+                    if event.key == pygame.K_LEFT or event.key == pygame.K_a:
+                        self.nextDirection = Direction.LEFT
+                        self.move_counter += 1
+                    if event.key == pygame.K_UP or event.key == pygame.K_w:
+                        self.nextDirection = Direction.UP
+                        self.move_counter += 1
+                    if event.key == pygame.K_DOWN or event.key == pygame.K_s:
+                        self.nextDirection = Direction.DOWN
+                        self.move_counter += 1
+                # backpage
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if self.PLAY_BACK.checkForInput(PLAY_MOUSE_POS):
+                        button_sfx.play()
+                        self.is_animating = False
+                        return self.is_animating, self.score
+    
+            # 2. move
+            self._move(self.nextDirection) # update the head
+            self.snakeBodys.insert(0, self.snakePosition)
+    
+            # 3. check if game over
+            self.is_animating = True
+            if self._is_collision():
                 self.is_animating = False
-                pygame.quit()
-            # user input
-            if event.type == pygame.KEYDOWN:                
-                ''' [DELETE THIS]不是這樣寫的
-                if event.key == pygame.K_ESCAPE:    # escape 鍵以退出動畫  
-                    self.is_animating = False
-                '''
-                if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
-                    self.nextDirection = Direction.RIGHT
-                if event.key == pygame.K_LEFT or event.key == pygame.K_a:
-                    self.nextDirection = Direction.LEFT               
-                if event.key == pygame.K_UP or event.key == pygame.K_w:
-                    self.nextDirection = Direction.UP             
-                if event.key == pygame.K_DOWN or event.key == pygame.K_s:
-                    self.nextDirection = Direction.DOWN
-            # backpage
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if self.PLAY_BACK.checkForInput(PLAY_MOUSE_POS):
-                    button_sfx.play()
-                    self.is_animating = False
-                    return self.is_animating, self.score
-
-        # 2. move
-        self._move(self.nextDirection) # update the head
-        self.snakeBodys.insert(0, self.snakePosition)
-
-        # 3. check if game over
-        self.is_animating = True
-        if self._is_collision():
-            self.is_animating = False
-            game.you_died_display()
+                time_counter = 0
+                game.you_died_display()
+                return self.is_animating, self.score
+    
+            # 4. place new food or just move
+            if self.snakePosition == self.foodPosition:
+                self.score += 1
+                self.foodNumber += 1
+                self._place_food()
+            else:
+                self.snakeBodys.pop()
+    
+            # 5. update ui and clock
+            self._update_ui()
+            self.clock.tick(self.speed)
+    
+            # 6. return is_animating and score
             return self.is_animating, self.score
-
-        # 4. place new food or just move
-        if self.snakePosition == self.foodPosition:
-            self.score += 1
-            self.foodNumber += 1
-            self._place_food()
-        else:
-            self.snakeBodys.pop()
-
-        # 5. update ui and clock
-        self._update_ui()
-        self.clock.tick(self.speed)
-
-        # 6. return is_animating and score
-        return self.is_animating, self.score
     
     # 有沒有撞到
     def _is_collision(self):
@@ -357,7 +396,6 @@ class Snake:    # 對應到 SnakeGame
             
             # 設定字體大小; 設定 Options 視窗的標題內容; 設定文字顏色為 #00E3E3
             OPTIONS1_TEXT = font(50).render("Background Image", True, "#00E3E3")
-
             # 文字中心座標位於 (240, 90)
             OPTIONS1_RECT = OPTIONS1_TEXT.get_rect(center=(240, 90))
             self.screen.blit(OPTIONS1_TEXT, OPTIONS1_RECT)
@@ -366,7 +404,12 @@ class Snake:    # 對應到 SnakeGame
             OPTIONS2_RECT = OPTIONS2_TEXT.get_rect(center=(217, 450))
             self.screen.blit(OPTIONS2_TEXT, OPTIONS2_RECT)
             
+            OPTIONS3_TEXT = font(50).render("AI activation", True, "#00E3E3")
+            OPTIONS3_RECT = OPTIONS3_TEXT.get_rect(center=(217, 570))
+            self.screen.blit(OPTIONS3_TEXT, OPTIONS3_RECT)
+            
             self.options_watch_tutorial.update(MENU_MOUSE_POS, point_start, self.screen)
+            self.options_ai_activation.update(MENU_MOUSE_POS, point_start, self.screen)
             self.OPTIONS_BACK.update(MENU_MOUSE_POS, point_quit, self.screen)
             
             # 使用者輸入
@@ -388,6 +431,8 @@ class Snake:    # 對應到 SnakeGame
                     elif self.options_watch_tutorial.checkForInput(MENU_MOUSE_POS):
                         button_sfx.play()
                         self.tutorial()
+                    elif self.options_ai_activation.checkForInput(MENU_MOUSE_POS):
+                        button_sfx.play()
 
             self.reset_button()
             self._update_ui()
