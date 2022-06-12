@@ -4,13 +4,14 @@ from pygame.locals import *
 from enum import Enum
 from collections import namedtuple
 import numpy as np
+import os
 
 # 初始化 pygame
 pygame.init()
 
 # 字體
 def font(size):  # Returns Press-Start-2P in the desired size
-    return pygame.font.Font("assets/font.ttf", size)
+    return pygame.font.Font(os.path.join('assets', 'font.ttf'), size)
 
 # 方向
 class Direction(Enum):
