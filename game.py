@@ -64,6 +64,7 @@ OptionRect = pygame.image.load(os.path.join('assets', 'OptionRect.png'))
 StartRect = pygame.image.load(os.path.join('assets', 'StartRect.png'))
 CancelNormal = pygame.image.load(os.path.join('assets', 'CancelNormal.png'))
 OkNormal = pygame.image.load(os.path.join('assets', 'OkNormal.png'))
+icon = pygame.image.load(os.path.join('assets', 'icon.png'))
 
 # 初始畫面的字
 menu_text = font(100).render("Snake", True, "#921AFF")
@@ -76,8 +77,9 @@ class Snake:
         self.h = h
 
         # init display
-        self.screen = pygame.display.set_mode((self.w, self.h))   # 設定視窗與邊界大小
+        self.screen = pygame.display.set_mode((self.w, self.h))     # 設定視窗與邊界大小
         pygame.display.set_caption("Snake") # 視窗標題
+        pygame.display.set_icon(icon)       # 設定 icon
         # 在轉的那些圖片
         ring.convert_alpha()
         self.arc1 = pygame.transform.scale(arc1.convert_alpha(), (ring.get_width() * 1.5, ring.get_height() * 1.5))
