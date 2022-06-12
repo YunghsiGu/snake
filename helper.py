@@ -3,11 +3,16 @@ from IPython import display
 
 plt.ion()   # 二維陣列圖
 
-def plot(scores, mean_scores):
+def plot(scores, mean_scores, snake):
+    if snake == 'GREEN':    # 開啟多個視窗
+        plt.figure(1)
+    else:
+        plt.figure(2)
     display.clear_output(wait=True) # cls
     display.display(plt.gcf())      # print / get current figure
     plt.clf()                       # clear current figure
-    plt.title('Training')
+    
+    plt.title('Training ' + snake)
     plt.xlabel('Number of Games')
     plt.ylabel('Score')
     plt.plot(scores)
