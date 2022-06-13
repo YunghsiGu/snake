@@ -198,12 +198,12 @@ class Snake:
             if self.selection_image == 1:
                 bg = background1
                 # 調整為視窗大小
-                bg = pygame.transform.scale(bg, (self.w, self.h))
+                bg = pygame.transform.scale(bg.convert_alpha(), (self.w, self.h))
                 self.screen.blit(bg, (0, 0))        
             elif self.selection_image == 2:
                 bg = background2
                 # 調整為視窗大小
-                bg = pygame.transform.scale(bg, (self.w, self.h))
+                bg = pygame.transform.scale(bg.convert_alpha(), (self.w, self.h))
                 self.screen.blit(bg, (0, 0))        
         
             PLAY_MOUSE_POS = pygame.mouse.get_pos() # 獲得滑鼠的位置
@@ -467,7 +467,7 @@ class Snake:
         
         # IMPORTANT! MUST UPDATE THE BACKGROUND BEFORE BLITTING THE PNG IMAGE!
         bg = background1
-        bg = pygame.transform.scale(bg, (self.w, self.h))
+        bg = pygame.transform.scale(bg.convert_alpha(), (self.w, self.h))
         self.screen.blit(bg, (0, 0))
         
         # Rotated version of the image and the shifted rect.
