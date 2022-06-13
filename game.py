@@ -348,7 +348,6 @@ class Snake:
             
             # 一堆按鍵
             # 圖片顯示與縮放
-            global background1, background2
             bg1 = pygame.transform.scale(background1, (160 * 2, 90 * 2))
             # 128 * 3, 72 * 3 --> 160 * 2, 90 * 2
             self.screen.blit(bg1, (450, 80))
