@@ -49,8 +49,8 @@ point_ok = pygame.image.load(os.path.join('assets', 'OkHover.png'))
 point_cancel = pygame.image.load(os.path.join('assets', 'CancelHover.png'))
 point_paste = pygame.image.load(os.path.join('assets', 'PasteHover.png'))
 point_remove = pygame.image.load(os.path.join('assets', 'RemoveHover.png'))
-T0 = pygame.image.load(os.path.join('assets', 'Alert.png'))
-T0 = pygame.transform.scale(T0, (800, 535))
+A0 = pygame.image.load(os.path.join('assets', 'Alert.png'))
+T0 = pygame.transform.scale(A0, (800, 535))
 bg_main = pygame.image.load(os.path.join('assets', 'Optionbackground.jpg'))
 bg_main = pygame.transform.scale(bg_main, (1280, 720))
 background1 = pygame.image.load(os.path.join('assets', 'Background.jpg'))
@@ -58,7 +58,6 @@ background2 = pygame.image.load(os.path.join('assets', 'Background2.jpg'))
 ring = pygame.image.load(os.path.join('assets', 'ring.png'))
 arc1 = pygame.image.load(os.path.join('assets', 'arc1.png'))
 arc2 = pygame.image.load(os.path.join('assets', 'arc2.png'))
-A0 = pygame.image.load(os.path.join('assets', 'Alert.png'))
 QuitRect = pygame.image.load(os.path.join('assets', 'QuitRect.png'))
 OptionRect = pygame.image.load(os.path.join('assets', 'OptionRect.png'))
 StartRect = pygame.image.load(os.path.join('assets', 'StartRect.png'))
@@ -350,12 +349,12 @@ class Snake:
             # 一堆按鍵
             # 圖片顯示與縮放
             global background1, background2
-            background1 = pygame.transform.scale(background1, (160 * 2, 90 * 2))
+            bg1 = pygame.transform.scale(background1, (160 * 2, 90 * 2))
             # 128 * 3, 72 * 3 --> 160 * 2, 90 * 2
-            self.screen.blit(background1, (450, 80))
-            background2 = pygame.transform.scale(background2, (160 * 2, 90 * 2))
+            self.screen.blit(bg1, (450, 80))
+            bg2 = pygame.transform.scale(background2, (160 * 2, 90 * 2))
             # 128 * 3, 72 * 3 --> 160 * 2, 90 * 2
-            self.screen.blit(background2, (800, 80))
+            self.screen.blit(bg2, (800, 80))
             
             MENU_MOUSE_POS = pygame.mouse.get_pos() # 取得游標位置
 
