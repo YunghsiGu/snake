@@ -240,16 +240,16 @@ class Snake:
                     time_counter += 1
                 # user input
                 if event.type == pygame.KEYDOWN:         
-                    if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
+                    if (event.key == pygame.K_RIGHT or event.key == pygame.K_d) and self.direction != Direction.LEFT:
                         self.direction = Direction.RIGHT
                         self.move_counter += 1
-                    if event.key == pygame.K_LEFT or event.key == pygame.K_a:
+                    elif (event.key == pygame.K_LEFT or event.key == pygame.K_a) and self.direction != Direction.RIGHT:
                         self.direction = Direction.LEFT
                         self.move_counter += 1
-                    if event.key == pygame.K_UP or event.key == pygame.K_w:
+                    elif (event.key == pygame.K_UP or event.key == pygame.K_w) and self.direction != Direction.DOWN:
                         self.direction = Direction.UP
                         self.move_counter += 1
-                    if event.key == pygame.K_DOWN or event.key == pygame.K_s:
+                    elif (event.key == pygame.K_DOWN or event.key == pygame.K_s) and self.direction != Direction.UP:
                         self.direction = Direction.DOWN
                         self.move_counter += 1
                 # backpage
