@@ -2,15 +2,24 @@
 
 import random, pygame
 from pygame.locals import *
+
+'''enum是Python裡用來建立枚舉形態的標準函式庫。
+enum算是比較新的標準函式庫，特性為
+1. 不同的 enum class 雖然有相同的 enum value，但比較結果是不相同的。
+2. 透過 enum class 可以取得 enum member。
+3. 透過 enum member 可以取得 name 或是 value。
+4. 可以改用 enum 來比對型態。
+enum適合用來1. 改寫以前單獨使用const variable的狀況。 2. 當資料數量不適合使用tuple，但用class卻太多的時候，可以考慮使用enum。'''
 from enum import Enum
 from collections import namedtuple
 import numpy as np
+'''os模組是關於作業系統操作呼叫的相關模組。它提供了一些系統級別的操作，例如對檔案進行重新命名、刪除等一系列操作。'''
 import os
 
 # 初始化 pygame
 pygame.init()
 
-# 字體
+# 定義字體的函式
 def font(size):  # Returns Press-Start-2P in the desired size
     return pygame.font.Font(os.path.join('assets', 'font.ttf'), size)
 
@@ -24,16 +33,16 @@ class Direction(Enum):
 # 一個 tuple, 用 x, y 來表示 index
 Point = namedtuple('Point', 'x, y')
 
-# color
+# 設定蛇的身體顏色、食物顏色、並定義黑色及黃色的色碼
 SNAKE_BODY_COLOR = pygame.Color(0, 255, 0) 
 FOOD_COLOR = pygame.Color(255, 0, 0)
 BLACK = (0, 0, 0)
 YELLOW = (255, 255, 0)
 
-class Snake_G:    # 對應到 SnakeGame
+class Snake_G:    # 對應到 SnakeGame。Snake_G負責綠蛇(Green Snake)的操作。
     # 初始化設定值
     def __init__(self, w=1280, h=720):
-        # 遊戲畫面大小
+        # 設定遊戲畫面大小(寬度、高度)
         self.w = w
         self.h = h
 
@@ -42,23 +51,23 @@ class Snake_G:    # 對應到 SnakeGame
         pygame.display.set_caption("Snake") # 視窗標題
 
         self.clock = pygame.time.Clock()
-        self.speed = 60
+        self.speed = 60 # 設定FPS為60
         self.snake_y = Snake_Y()
 
-        # init game state
+        # 使用reset()函式
         self.reset()
 
     def reset(self):
-        # init game state
+        # 初始化(部分)遊戲設定值
         self.direction = Direction.RIGHT
 
-        self.snakePosition = Point(200, 200) # head             
-        self.snakeBodys = [self.snakePosition, Point(180, 200), Point(160, 200)] 
+        self.snakePosition = Point(200, 200) # 蛇的頭部位置           
+        self.snakeBodys = [self.snakePosition, Point(180, 200), Point(160, 200)]
         self.foodPosition = Point(500, 500) # 食物位置
-        self._place_food()
-        self.is_animating = True    # 是否繼續執行 start()
+        self._place_food() # 設置食物
+        self.is_animating = True    # 判斷是否繼續執行 start()
 
-        self.score = 0     
+        self.score = 0 # 重設綠蛇的分數為0
         self.frame_iteration = 0
 
         self.snake_y.reset()
@@ -138,7 +147,7 @@ class Snake_G:    # 對應到 SnakeGame
         # 6. return is_animating and score
         return self.reward, not self.is_animating, self.score, self.snake_y.reward, self.snake_y.score
     
-    # 有沒有撞到
+    # 判斷自己有沒有撞到
     def is_collision(self, pt=None):
         if pt is None:
             pt = self.snakePosition
@@ -155,7 +164,8 @@ class Snake_G:    # 對應到 SnakeGame
             return True
         else:
             return False
-
+        
+    # 判斷對手(黃蛇)有沒有撞到
     def opponent_collision(self, pt=None):
         if pt is None:
             pt = self.snake_y.snakePosition
@@ -218,20 +228,21 @@ class Snake_G:    # 對應到 SnakeGame
 
         self.snakePosition = Point(x, y)
 
-class Snake_Y:    # 對應到 SnakeGame
+class Snake_Y:    # 對應到 SnakeGame。Snake_Y負責黃蛇(Yellow Snake)的操作。
     # 初始化設定值
     def __init__(self):
-        # init game state
+        # 使用reset()函式
         self.reset()
 
+    # 定義reset()函式
     def reset(self):
-        # init game state
+        # 預設移動方向為向左
         self.direction = Direction.LEFT
 
-        self.snakePosition = Point(880, 320) # head             
+        self.snakePosition = Point(880, 320) # 蛇的頭部位置         
         self.snakeBodys = [self.snakePosition, Point(900, 320), Point(920, 320)] 
 
-        self.score = 0     
+        self.score = 0 # 重設黃蛇的分數為0
         self.frame_iteration = 0    
         self.reward = 0
     
