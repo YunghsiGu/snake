@@ -1,3 +1,5 @@
+# 此為繪圖程式，負責繪出訓練數據的二維陣列圖。
+
 import matplotlib.pyplot as plt
 from IPython import display
 
