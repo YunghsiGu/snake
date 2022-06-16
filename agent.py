@@ -1,3 +1,5 @@
+# 此為AI主體，引入了snakeAI.py，model.py與helper.py程式。執行此程式將開始訓練AI貪食蛇。
+
 import torch
 import random
 import numpy as np
