@@ -1,4 +1,5 @@
-# 做 AI 用的簡化版遊戲
+# 此為簡化版遊戲，供訓練AI使用。
+
 import random, pygame
 from pygame.locals import *
 from enum import Enum
