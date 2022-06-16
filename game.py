@@ -1,3 +1,5 @@
+# 此為完整的遊戲本體(純遊戲，不含AI部分)。
+
 # 引入模組, 並利用 button 模組引入 button.py 檔案(class Button())
 import random, pygame, time, os
 from pygame.locals import *
