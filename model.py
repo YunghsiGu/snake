@@ -1,4 +1,5 @@
-# deep learning
+# 此為Deep Q Learning的部分，定義了Linear_QNet與QTrainer兩個函式。
+
 import torch
 import torch.nn as nn
 import torch.optim as optim
