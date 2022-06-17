@@ -13,7 +13,8 @@ enum適合用來1. 改寫以前單獨使用const variable的狀況。 2. 當資�
 from enum import Enum
 from collections import namedtuple
 import numpy as np
-'''os模組是關於作業系統操作呼叫的相關模組。它提供了一些系統級別的操作，例如對檔案進行重新命名、刪除等一系列操作。'''
+'''os模組是關於作業系統操作呼叫的相關模組。它提供了一些系統級別的操作，例如對檔案進行重新命名、刪除等一系列操作，
+將程式碼改用os的模式撰寫可以支援跨平臺'''
 import os
 
 # 初始化 pygame
