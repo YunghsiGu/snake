@@ -24,7 +24,7 @@ class Agent:
     # 初始化設定值
     def __init__(self):
         self.num_games = 0  # number of game (遊戲場次數)
-        self.epsilon = 0    # control randomness (用來控制隨機程度)
+        self.epsilon = 0    # control randomness (用來控制貪食蛇移動的隨機程度，也就是在隨機移動與以訓練數據為標準進行移動之間做出取捨)
         self.gamma = 0.9    # discount rate, must < 1
         self.memory = deque(maxlen=MAX_MEMORY)  # popleft()
         '''This is just a feed-forward neural net with an input layer, a hidden layer, and an output layer.
