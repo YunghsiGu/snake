@@ -81,7 +81,7 @@ class QTrainer:
             reward = torch.unsqueeze(reward, 0)
             done = (done, ) # tuple with only one value
 
-        # 1: 以目前狀態預測Q值 (predicted Q values with current state
+        # 1: 以目前狀態預測Q值 (predicted Q values with current state)
         pred = self.model(state)
 
         target = pred.clone()
